@@ -1,11 +1,10 @@
 package pers.cc.demo.leetcode;
 
-import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.concurrent.TransferQueue;
-
+import com.sun.org.apache.regexp.internal.RE;
 import org.junit.Test;
+
+import java.nio.charset.Charset;
+import java.util.*;
 
 public class LeetCode1to10 {
 
@@ -74,25 +73,6 @@ public class LeetCode1to10 {
         ListNode listNode1 = new ListNode(5);
         ListNode listNode2 = new ListNode(5);
         System.out.println(LeetCode1to10.addTwoNumbers(listNode1, listNode2).toString());
-    }
-
-    @Test
-    public void addTwoNumbers2() {
-        ListNode listNode1 = new ListNode(9);
-        ListNode listNode2 = new ListNode(8);
-        listNode1.next = listNode2;
-        ListNode listNode3 = new ListNode(1);
-        System.out.println(LeetCode1to10.addTwoNumbers(listNode1, listNode3).toString());
-    }
-
-
-    @Test
-    public void addTwoNumbers3() {
-        ListNode listNode1 = new ListNode(9);
-        ListNode listNode2 = new ListNode(9);
-        listNode1.next = listNode2;
-        ListNode listNode3 = new ListNode(1);
-        System.out.println(LeetCode1to10.addTwoNumbers(listNode3, listNode1).toString());
     }
 
     @Test
@@ -484,52 +464,52 @@ public class LeetCode1to10 {
         char[] val = value;    /* avoid getfield opcode */
         int begin = -1;
         int end = -1;
-        String symbol=null;
-        boolean next=true;
-        if (len==1){
-                return str.matches("\\d+")?Integer.valueOf(str):0;
+        String symbol = null;
+        boolean next = true;
+        if (len == 1) {
+            return str.matches("\\d+") ? Integer.valueOf(str) : 0;
         }
         for (int i = 0; i < len - 1; i++) {
             if (String.valueOf(val[i]).matches("\\d+|\\+|-")) {
-                if (String.valueOf(val[i]).matches("\\+|-")){
-                    symbol=String.valueOf(val[i]);
-                    if (String.valueOf(val[i + 1]).matches("\\d+")&& val[i + 1] != '0') {
-                        if (begin==-1){
+                if (String.valueOf(val[i]).matches("\\+|-")) {
+                    symbol = String.valueOf(val[i]);
+                    if (String.valueOf(val[i + 1]).matches("\\d+") && val[i + 1] != '0') {
+                        if (begin == -1) {
                             begin = i;
                             end = i + 1;
                         }
 
                     } else {
-                        if (begin==-1) {
+                        if (begin == -1) {
                             end = i;
                             next = false;
                         }
                     }
-                }else {
-                    if (String.valueOf(val[i]).matches("\\d+")&& val[i + 1] != '0'){
-                        if (begin==-1){
+                } else {
+                    if (String.valueOf(val[i]).matches("\\d+") && val[i + 1] != '0') {
+                        if (begin == -1) {
                             begin = i;
                         }
-                        if (next&&begin!=-1){
+                        if (next && begin != -1) {
                             end = i + 1;
                         }
                     }
                     if (String.valueOf(val[i + 1]).matches("\\d+")) {
-                        if (next&&begin!=-1){
+                        if (next && begin != -1) {
                             end = i + 1;
                         }
                     } else {
 
-                        if (next&&begin!=-1){
+                        if (next && begin != -1) {
                             end = i;
                         }
-                        next=false;
+                        next = false;
                     }
                 }
-            }else {
-                if (val[i] == ' '){
+            } else {
+                if (val[i] == ' ') {
                     continue;
-                }else {
+                } else {
                     break;
                 }
             }
@@ -537,24 +517,24 @@ public class LeetCode1to10 {
         if (end == -1) {
             return 0;
         }
-        String result =str.subSequence(begin, end + 1).toString().replaceAll(" ", "");
-        if (symbol!=null){
-            if (result.length()==1){
+        String result = str.subSequence(begin, end + 1).toString().replaceAll(" ", "");
+        if (symbol != null) {
+            if (result.length() == 1) {
                 return 0;
             }
-            if (result.length()>String.valueOf(Integer.MIN_VALUE).length()){
+            if (result.length() > String.valueOf(Integer.MIN_VALUE).length()) {
                 return Integer.MIN_VALUE;
-            }else if (result.length()==String.valueOf(Integer.MIN_VALUE).length()){
-                if (result.compareTo(String.valueOf(Integer.MIN_VALUE))>0){
+            } else if (result.length() == String.valueOf(Integer.MIN_VALUE).length()) {
+                if (result.compareTo(String.valueOf(Integer.MIN_VALUE)) > 0) {
                     return Integer.MIN_VALUE;
                 }
             }
             return Integer.valueOf(result.toString());
         }
-        if (result.length()>String.valueOf(Integer.MAX_VALUE).length()){
+        if (result.length() > String.valueOf(Integer.MAX_VALUE).length()) {
             return Integer.MAX_VALUE;
-        }else if (result.length()==String.valueOf(Integer.MAX_VALUE).length()){
-            if (result.compareTo(String.valueOf(Integer.MAX_VALUE))>0){
+        } else if (result.length() == String.valueOf(Integer.MAX_VALUE).length()) {
+            if (result.compareTo(String.valueOf(Integer.MAX_VALUE)) > 0) {
                 return Integer.MAX_VALUE;
             }
         }
@@ -582,9 +562,366 @@ public class LeetCode1to10 {
 //     String str ="4193 with words";
 //     String str ="words and 987";
 //     String str ="000000000000000000";
-     String str ="-000000000000001";
+        String str = "-000000000000001";
         System.out.println(myAtoi(str));
     }
 
+    /**
+     * 罗马数字包含以下七种字符：I， V， X， L，C，D 和 M。
+     * <p>
+     * 字符          数值
+     * I             1
+     * V             5
+     * X             10
+     * L             50
+     * C             100
+     * D             500
+     * M             1000
+     * 例如， 罗马数字 2 写做 II ，即为两个并列的 1。12 写做 XII ，即为 X + II 。 27 写做  XXVII, 即为 XX + V + II 。
+     * <p>
+     * 通常情况下，罗马数字中小的数字在大的数字的右边。但也存在特例，例如 4 不写做 IIII，而是 IV。数字 1 在数字 5 的左边，所表示的数等于大数 5 减小数 1 得到的数值 4 。同样地，数字 9 表示为 IX。这个特殊的规则只适用于以下六种情况：
+     * <p>
+     * I 可以放在 V (5) 和 X (10) 的左边，来表示 4 和 9。
+     * X 可以放在 L (50) 和 C (100) 的左边，来表示 40 和 90。
+     * C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
+     * 给定一个罗马数字，将其转换成整数。输入确保在 1 到 3999 的范围内。
+     * <p>
+     * 示例 1:
+     * <p>
+     * 输入: "III"
+     * 输出: 3
+     * 示例 2:
+     * <p>
+     * 输入: "IV"
+     * 输出: 4
+     * 示例 3:
+     * <p>
+     * 输入: "IX"
+     * 输出: 9
+     * 示例 4:
+     * <p>
+     * 输入: "LVIII"
+     * 输出: 58
+     * 解释: C = 100, L = 50, XXX = 30, III = 3.
+     * 示例 5:
+     * <p>
+     * 输入: "MCMXCIV"
+     * 输出: 1994
+     * 解释: M = 1000, CM = 900, XC = 90, IV = 4.
+     *
+     * @param s
+     * @return
+     */
+    public int romanToInt(String s) {
+        int result = 0;
+        char[] chars = s.toCharArray();
+        int len = chars.length;
+        for (int i = 0; i < len; i++) {
+            char c = chars[i];
+            if (chars[i] == 'I') {
+                if (i + 1 < len) {
+                    if (chars[i + 1] == 'V') {
+                        result += 4;
+                        i = i + 1;
+                        continue;
+                    } else if (chars[i + 1] == 'X') {
+                        result += 9;
+                        i = i + 1;
+                        continue;
+                    }
+                }
+            } else if (chars[i] == 'X') {
+                if ((i + 1 < len)) {
+                    if (chars[i + 1] == 'L') {
+                        result += 40;
+                        i = i + 1;
+                        continue;
+                    } else if (chars[i + 1] == 'C') {
+                        result += 90;
+                        i = i + 1;
+                        continue;
+                    }
+                }
+            } else if (chars[i] == 'C') {
+                if (i + 1 < len) {
+                    if (chars[i + 1] == 'D') {
+                        result += 400;
+                        i = i + 1;
+                        continue;
+                    } else if (chars[i + 1] == 'M') {
+                        result += 900;
+                        i = i + 1;
+                        continue;
+                    }
+                }
+            }
+            switch (c) {
+                case 'I':
+                    result += 1;
+                    break;
+                case 'V':
+                    result += 5;
+                    break;
+                case 'X':
+                    result += 10;
+                    break;
+                case 'L':
+                    result += 50;
+                    break;
+                case 'C':
+                    result += 100;
+                    break;
+                case 'D':
+                    result += 500;
+                    break;
+                case 'M':
+                    result += 1000;
+                    break;
+            }
+        }
+        return result;
+    }
+
+    @Test
+    public void romanToInt() {
+        System.out.println(romanToInt("IVC"));
+        System.out.println(romanToInt("MCMXCIV"));
+    }
+
+    /**
+     * ------------------------------------14Longest Common Prefix---------------------------------------------
+     * Write a function to find the longest common prefix string amongst an array of strings.
+     * If there is no common prefix, return an empty string "".
+     * Example 1:
+     * Input: ["flower","flow","flight"]
+     * Output: "fl"
+     * Example 2:
+     * <p>
+     * Input: ["dog","racecar","car"]
+     * Output: ""
+     * Explanation: There is no common prefix among the input strings.
+     * Note:
+     * <p>
+     * All given inputs are in lowercase letters a-z.
+     *
+     * @param strs
+     * @return
+     */
+    public String longestCommonPrefix(String[] strs) {
+        if (strs.length == 0) {
+            return "";
+        }
+        if (strs.length == 1) {
+            return strs[0].toString();
+        }
+        int len = strs.length;
+        int minIndex = 0;
+        for (int i = 0; i < len; i++) {
+            if (strs[i].equals("")) {
+                return "";
+            }
+            if (i == 0) {
+                minIndex = strs[i].length() < strs[i + 1].length() ? i : i + 1;
+            } else {
+                minIndex = strs[minIndex].length() < strs[i].length() ? minIndex : i;
+            }
+
+        }
+
+        String str = strs[minIndex];
+        char[] chars = str.toCharArray();
+        int charsLen = chars.length;
+        StringBuilder sb = new StringBuilder();
+        for (int j = 0; j < charsLen; j++) {
+            boolean f = false;
+            for (int i = 0; i < len; i++) {
+                if (i != minIndex) {
+                    if (strs[i].charAt(j) == chars[j]) {
+                        f = true;
+                    } else {
+                        if (sb.toString().length() == 0) {
+                            return "";
+                        }
+                        f = false;
+                        break;
+                    }
+                }
+            }
+            if (f) {
+                sb.append(chars[j]);
+            } else {
+                break;
+            }
+        }
+        return sb.toString();
+    }
+
+    @Test
+    public void longestCommonPrefix() {
+//        System.out.println(longestCommonPrefix((String[]) Arrays.asList("flower","flow","flight").toArray()));
+//        System.out.println(longestCommonPrefix((String[]) Arrays.asList("dog","racecar","car").toArray()));
+//        System.out.println(longestCommonPrefix((String[]) Arrays.asList("a").toArray()));
+//        System.out.println(longestCommonPrefix((String[]) Arrays.asList("caa","","a","acb").toArray()));
+//        System.out.println(longestCommonPrefix((String[]) Arrays.asList("b","cb","cab").toArray()));
+//        System.out.println(longestCommonPrefix((String[]) Arrays.asList("").toArray()));
+//        System.out.println(longestCommonPrefix((String[]) Arrays.asList("c","acc","ccc").toArray()));
+//        System.out.println(longestCommonPrefix((String[]) Arrays.asList("abab","aba","").toArray()));
+        System.out.println(longestCommonPrefix((String[]) Arrays.asList("acc", "aaa", "aaba").toArray()));
+    }
+
+    /**
+     * Valid Parentheses
+     * Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+     * <p>
+     * An input string is valid if:
+     * <p>
+     * Open brackets must be closed by the same type of brackets.
+     * Open brackets must be closed in the correct order.
+     * Note that an empty string is also considered valid.
+     * <p>
+     * Example 1:
+     * <p>
+     * Input: "()"
+     * Output: true
+     * Example 2:
+     * <p>
+     * Input: "()[]{}"
+     * Output: true
+     * Example 3:
+     * <p>
+     * Input: "(]"
+     * Output: false
+     * Example 4:
+     * <p>
+     * Input: "([)]"
+     * Output: false
+     * Example 5:
+     * <p>
+     * Input: "{[]}"
+     * Output: true
+     *
+     * @param s
+     * @return
+     */
+    public boolean isValid(String s) {
+        if (s.equals("")) {
+            return true;
+        }
+        if (s.length() % 2 == 1) {
+            return false;
+        }
+        if (s.contains("{") && !s.contains("}")) {
+            return false;
+        }
+        if (s.contains("(") && !s.contains(")")) {
+            return false;
+        }
+        if (s.contains("[") && !s.contains("]")) {
+            return false;
+        }
+        while (true) {
+            String s1 = getStr(s);
+            if (s1 == null) {
+                return false;
+            } else if (s1.equals(0)) {
+                return true;
+            }
+            s = s1;
+        }
+    }
+
+    private String getStr(String s) {
+        char[] chars = s.toCharArray();
+        int len = chars.length;
+        boolean r = true;
+        for (int i = 0; i < len; i++) {
+            if (!r) {
+                break;
+            }
+            if (chars[i] == '(' && chars[i + 1] != ')') {
+                i = i + 1;
+                r = false;
+                continue;
+            }
+            if (chars[i] == '[' && chars[i + 1] != ']') {
+                i = i + 1;
+                r = false;
+                continue;
+            }
+            if (chars[i] == '{' && chars[i + 1] != '}') {
+                i = i + 1;
+                r = false;
+                continue;
+            }
+        }
+        if (r) {
+            return "0";
+        }
+        if (chars[0] == '(' && chars[len - 1] != ')') {
+            return null;
+        }
+        if (chars[0] == '[' && chars[len - 1] != ']') {
+            return null;
+        }
+        if (chars[0] == '{' && chars[len - 1] != '}') {
+            return null;
+        }
+        return s.subSequence(1, s.length() - 1).toString();
+    }
+
+    @Test
+    public void isValid() {
+        System.out.println(isValid("({"));
+//        System.out.println(isValid("()[]"));
+//        System.out.println(isValid("{()[]}"));
+//        System.out.println("123".subSequence(1, 2).toString());
+    }
+
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode listNode = null;
+        ListNode result = null;
+        //排序
+        List<Integer> list = new ArrayList<>();
+        while (l1 != null) {
+            list.add(l1.val);
+            l1 = l1.next;
+        }
+        while (l2 != null) {
+            list.add(l2.val);
+            l2 = l2.next;
+        }
+        Collections.sort(list);
+       for (int i=0;i<list.size();i++){
+            if (listNode == null) {
+                listNode = new ListNode(list.get(i));
+                result = listNode;
+            } else {
+                listNode.next = new ListNode(list.get(i));
+                listNode=listNode.next;
+            }
+
+        }
+        return result;
+    }
+
+    @Test
+    public void mergeTwoLists() {
+        ListNode l1 = new ListNode(1);
+        ListNode l2 = new ListNode(2);
+        ListNode l4 = new ListNode(4);
+        l1.next = l2;
+        l2.next = l4;
+
+        ListNode l5 = new ListNode(1);
+        ListNode l6 = new ListNode(3);
+        ListNode l7 = new ListNode(4);
+        l5.next = l6;
+        l6.next = l7;
+//
+//        ListNode l1 = new ListNode(2);
+//        ListNode l5 = new ListNode(1);
+
+        System.out.println(mergeTwoLists(l1, l5));
+    }
 
 }
