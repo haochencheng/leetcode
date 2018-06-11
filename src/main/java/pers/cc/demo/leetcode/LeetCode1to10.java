@@ -3,6 +3,8 @@ package pers.cc.demo.leetcode;
 import com.sun.org.apache.regexp.internal.RE;
 import org.junit.Test;
 
+import javax.sound.midi.Soundbank;
+import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.util.*;
 
@@ -891,13 +893,13 @@ public class LeetCode1to10 {
             l2 = l2.next;
         }
         Collections.sort(list);
-       for (int i=0;i<list.size();i++){
+        for (int i = 0; i < list.size(); i++) {
             if (listNode == null) {
                 listNode = new ListNode(list.get(i));
                 result = listNode;
             } else {
                 listNode.next = new ListNode(list.get(i));
-                listNode=listNode.next;
+                listNode = listNode.next;
             }
 
         }
@@ -922,6 +924,381 @@ public class LeetCode1to10 {
 //        ListNode l5 = new ListNode(1);
 
         System.out.println(mergeTwoLists(l1, l5));
+    }
+
+    /**
+     * -----------------------------26. 删除排序数组中的重复项---------------------------
+     * 给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。
+     * <p>
+     * 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。
+     * <p>
+     * 示例 1:
+     * <p>
+     * 给定数组 nums = [1,1,2],
+     * <p>
+     * 函数应该返回新的长度 2, 并且原数组 nums 的前两个元素被修改为 1, 2。
+     * <p>
+     * 你不需要考虑数组中超出新长度后面的元素。
+     * 示例 2:
+     * <p>
+     * 给定 nums = [0,0,1,1,1,2,2,3,3,4],
+     * <p>
+     * 函数应该返回新的长度 5, 并且原数组 nums 的前五个元素被修改为 0, 1, 2, 3, 4。
+     * <p>
+     * 你不需要考虑数组中超出新长度后面的元素。
+     * 说明:
+     * <p>
+     * 为什么返回数值是整数，但输出的答案是数组呢?
+     * <p>
+     * 请注意，输入数组是以“引用”方式传递的，这意味着在函数里修改输入数组对于调用者是可见的。
+     * <p>
+     * 你可以想象内部操作如下:
+     * <p>
+     * // nums 是以“引用”方式传递的。也就是说，不对实参做任何拷贝
+     * int len = removeDuplicates(nums);
+     * <p>
+     * // 在函数里修改输入数组对于调用者是可见的。
+     * // 根据你的函数返回的长度, 它会打印出数组中该长度范围内的所有元素。
+     * for (int i = 0; i < len; i++) {
+     * print(nums[i]);
+     * }
+     *
+     * @param nums
+     * @return
+     */
+    public int removeDuplicates(int[] nums) {
+        int len = nums.length;
+        int del = 0;
+        for (int i = 0; i < len; i++) {
+            for (int j = i + 1; j < len; j++) {
+                if (nums[i] == nums[j]) {
+                    nums[j] = nums[len - del - 1];
+                    nums[len - del - 1] = nums[i];
+                    del++;
+                }
+            }
+        }
+        return len - del;
+    }
+
+    @Test
+    public void removeDuplicates() {
+//        int[] nums=new int[]{1};
+//        int[] nums=new int[]{1,1};
+//        int[] nums=new int[]{1,1,2};
+//        int[] nums=new int[]{1,1,1,1};
+        int[] nums = new int[]{0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
+
+//        int[] nums = new int[]{0, 0, 0, 0,0};
+        int len = removeDuplicates(nums);
+        System.out.println(len);
+        System.out.println(Arrays.toString(nums));
+    }
+
+
+    public int removeElement(int[] nums, int val) {
+        int len = nums.length;
+        int del = 0;
+        for (int i = 0; i < len; i++) {
+            for (int j = i + 1; j < len; j++) {
+                if (nums[i] == val && nums[j] != val) {
+                    nums[i] = nums[j];
+                    nums[j] = val;
+                }
+            }
+        }
+        for (int i = 0; i < len; i++) {
+            if (nums[i] == val) {
+                del++;
+            }
+        }
+        return len - del;
+    }
+
+    @Test
+    public void removeElement() {
+        int[] ints = new int[]{3, 2, 2, 3};
+        System.out.println(removeElement(ints, 2));
+        System.out.println(Arrays.toString(ints));
+    }
+
+    /**
+     * 实现strStr()
+     * 实现 strStr() 函数。
+     * <p>
+     * 给定一个 haystack 字符串和一个 needle 字符串，在 haystack 字符串中找出 needle 字符串出现的第一个位置 (从0开始)。如果不存在，则返回  -1。
+     * <p>
+     * 示例 1:
+     * <p>
+     * 输入: haystack = "hello", needle = "ll"
+     * 输出: 2
+     * 示例 2:
+     * <p>
+     * 输入: haystack = "aaaaa", needle = "bba"
+     * 输出: -1
+     * 说明:
+     * <p>
+     * 当 needle 是空字符串时，我们应当返回什么值呢？这是一个在面试中很好的问题。
+     *
+     * @param haystack
+     * @param needle
+     * @return
+     */
+    public int strStr(String haystack, String needle) {
+        if (needle.equals("")) {
+            return 0;
+        }
+        char[] chars = haystack.toCharArray();
+        char[] needles = needle.toCharArray();
+        int len = chars.length;
+        int nLen = needles.length;
+        int start = -1;
+        int r = 0;
+        for (int i = 0; i < len; i++) {
+            if (chars[i] == needles[0] && start == -1) {
+                if (len - i < nLen) {
+                    return -1;
+                }
+                start = i;
+                while (i < start + nLen && i - start < nLen && chars[i] == needles[i - start]) {
+                    i++;
+                    r++;
+                }
+                if (r == nLen) {
+                    return start;
+                }
+                r = 0;
+                i = start;
+                start = -1;
+            } else {
+                start = -1;
+            }
+        }
+        if (start == -1) {
+            return -1;
+        }
+        return -1;
+    }
+
+    @Test
+    public void strStr() {
+//        System.out.println(strStr("aaaaa","bba"));
+//        System.out.println(strStr("aaa","a"));
+//        System.out.println(strStr("aaa","aa"));
+//        System.out.println("mississippi".indexOf("issip"));
+        System.out.println(strStr("mississippi", "pi"));
+//        System.out.println(strStr("mississippi","issip"));
+//        System.out.println(strStr("a","a"));
+//        System.out.println(strStr("hello","ll"));
+    }
+
+    /**
+     * 搜索插入位置
+     * 给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
+     * 你可以假设数组中无重复元素。
+     * 示例 1:
+     * 输入: [1,3,5,6], 5
+     * 输出: 2
+     * 示例 2:
+     * 输入: [1,3,5,6], 2
+     * 输出: 1
+     * 示例 3:
+     * 输入: [1,3,5,6], 7
+     * 输出: 4
+     * 示例 4:
+     * 输入: [1,3,5,6], 0
+     * 输出: 0
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int searchInsert(int[] nums, int target) {
+        int len = nums.length;
+        if (target < nums[0]) {
+            return 0;
+        }
+        if (target > nums[len - 1]) {
+            return len;
+        }
+        for (int i = 0; i < len; i++) {
+            if (nums[i] == target) {
+                return i;
+            }
+            if (nums[i] < target && nums[i + 1] > target) {
+                return i + 1;
+            }
+
+        }
+        return 0;
+    }
+
+    @Test
+    public void searchInsert() {
+        int target = 5;
+//        int target=2;
+//        int target=7;
+        int[] nums = new int[]{1, 3, 5, 6};
+
+        System.out.println(searchInsert(nums, target));
+    }
+
+    /**
+     * 报数
+     * <p>
+     * 报数序列是指一个整数序列，按照其中的整数的顺序进行报数，得到下一个数。其前五项如下：
+     * <p>
+     * 1.     1
+     * 2.     11
+     * 3.     21
+     * 4.     1211
+     * 5.     111221
+     * 1 被读作  "one 1"  ("一个一") , 即 11。
+     * 11 被读作 "two 1s" ("两个一"）, 即 21。
+     * 21 被读作 "one 2",  "one 1" （"一个二" ,  "一个一") , 即 1211。
+     * 给定一个正整数 n ，输出报数序列的第 n 项。
+     * 注意：整数顺序将表示为一个字符串。
+     * 示例 1:
+     * 输入: 1
+     * 输出: "1"
+     * 示例 2:
+     * 输入: 4
+     * 输出: "1211"
+     *
+     * @param n
+     * @return
+     */
+    public String countAndSay(int n) {
+        return "没看懂题";
+    }
+
+    @Test
+    public void countAndSay() {
+
+    }
+
+    /**
+     * -----------------------------53---------------------------
+     * 最大子序和
+     * 给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+     * <p>
+     * 示例:
+     * <p>
+     * 输入: [-2,1,-3,4,-1,2,1,-5,4],
+     * 输出: 6
+     * 解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。
+     * 进阶:
+     * <p>
+     * 如果你已经实现复杂度为 O(n) 的解法，尝试使用更为精妙的分治法求解。
+     *
+     * @param nums
+     * @return
+     */
+    public int maxSubArray(int[] nums) {
+        int len = nums.length;
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        int maxSum = nums[0];
+        int start;
+        for (int i = 0; i < len; i++) {
+            int sum = 0;
+            start = i;
+            while (i < len) {
+                sum += nums[i];
+                i++;
+                maxSum = maxSum > sum ? maxSum : sum;
+            }
+            i = start;
+        }
+        return maxSum;
+    }
+
+    @Test
+    public void maxSubArray() {
+//        int[] nums=new int[]{4,-1,2,1,-5};
+//        int[] nums=new int[]{-2,-1};
+        int[] nums = new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4};
+        System.out.println(maxSubArray(nums));
+    }
+
+    /**
+     * 最后一个单词的长度
+     * <p>
+     * 给定一个仅包含大小写字母和空格 ' ' 的字符串，返回其最后一个单词的长度。
+     * 如果不存在最后一个单词，请返回 0 。
+     * 说明：一个单词是指由字母组成，但不包含任何空格的字符串。
+     * 示例:
+     * 输入: "Hello World"
+     * 输出: 5
+     *
+     * @param s
+     * @return
+     */
+    public int lengthOfLastWord(String s) {
+        String[] strings = s.split(" ");
+        int len = strings.length;
+        if (len == 0) {
+            return 0;
+        }
+        return strings[len - 1].length();
+    }
+
+    @Test
+    public void lengthOfLastWord() {
+        System.out.println(lengthOfLastWord("Hello World"));
+    }
+
+    /**
+     * ----------------------------------66--------------------------------
+     *  加一
+     *  给定一个非负整数组成的非空数组，在该数的基础上加一，返回一个新的数组。
+
+     最高位数字存放在数组的首位， 数组中每个元素只存储一个数字。
+     你可以假设除了整数 0 之外，这个整数不会以零开头。
+     示例 1:
+     输入: [1,2,3]
+     输出: [1,2,4]
+     解释: 输入数组表示数字 123。
+     示例 2:
+     输入: [4,3,2,1]
+     输出: [4,3,2,2]
+     解释: 输入数组表示数字 4321。
+     *
+     * @param digits
+     * @return
+     */
+    public int[] plusOne(int[] digits) {
+        int len = digits.length;
+        int i = 0;
+        int last = digits[len - 1 - i] + 1;
+        if (last >= 10) {
+            while (last >= 10 && i < len) {
+                digits[len - 1 - i]=last-10;
+                i++;
+                if (i >= len) {
+                    len=len+1;
+                    digits[len - 1 - i]=digits[len - 1 - i]+1;
+                    last= digits[len - 1 - i];
+                    digits = Arrays.copyOf(digits, len);
+                }else {
+                   last= digits[len - 1 - i]+1;
+                   digits[len - 1 - i]=last;
+                }
+            }
+            return digits;
+        }
+        digits[len - 1 - i] = last;
+        return digits;
+    }
+
+    @Test
+    public void plusOne() {
+//        int[] nums = new int[]{9};
+//        int[] nums = new int[]{9,9};
+        int[] nums = new int[]{5,6,2,0,0,4,6,2,4,9};
+//        int[] nums = new int[]{1, 2, 3};
+        System.out.println(Arrays.toString(plusOne(nums)));
     }
 
 }
