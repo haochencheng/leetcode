@@ -1,12 +1,16 @@
 package pers.cc.demo.leetcode;
 
 import com.sun.org.apache.regexp.internal.RE;
+import javafx.util.Pair;
 import org.junit.Test;
 
 import javax.sound.midi.Soundbank;
 import java.math.BigDecimal;
+import java.nio.channels.Pipe;
 import java.nio.charset.Charset;
+import java.sql.ResultSet;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class LeetCode1to10 {
 
@@ -1251,19 +1255,19 @@ public class LeetCode1to10 {
 
     /**
      * ----------------------------------66--------------------------------
-     *  加一
-     *  给定一个非负整数组成的非空数组，在该数的基础上加一，返回一个新的数组。
-
-     最高位数字存放在数组的首位， 数组中每个元素只存储一个数字。
-     你可以假设除了整数 0 之外，这个整数不会以零开头。
-     示例 1:
-     输入: [1,2,3]
-     输出: [1,2,4]
-     解释: 输入数组表示数字 123。
-     示例 2:
-     输入: [4,3,2,1]
-     输出: [4,3,2,2]
-     解释: 输入数组表示数字 4321。
+     * 加一
+     * 给定一个非负整数组成的非空数组，在该数的基础上加一，返回一个新的数组。
+     * <p>
+     * 最高位数字存放在数组的首位， 数组中每个元素只存储一个数字。
+     * 你可以假设除了整数 0 之外，这个整数不会以零开头。
+     * 示例 1:
+     * 输入: [1,2,3]
+     * 输出: [1,2,4]
+     * 解释: 输入数组表示数字 123。
+     * 示例 2:
+     * 输入: [4,3,2,1]
+     * 输出: [4,3,2,2]
+     * 解释: 输入数组表示数字 4321。
      *
      * @param digits
      * @return
@@ -1274,16 +1278,16 @@ public class LeetCode1to10 {
         int last = digits[len - 1 - i] + 1;
         if (last >= 10) {
             while (last >= 10 && i < len) {
-                digits[len - 1 - i]=last-10;
+                digits[len - 1 - i] = last - 10;
                 i++;
                 if (i >= len) {
-                    len=len+1;
-                    digits[len - 1 - i]=digits[len - 1 - i]+1;
-                    last= digits[len - 1 - i];
+                    len = len + 1;
+                    digits[len - 1 - i] = digits[len - 1 - i] + 1;
+                    last = digits[len - 1 - i];
                     digits = Arrays.copyOf(digits, len);
-                }else {
-                   last= digits[len - 1 - i]+1;
-                   digits[len - 1 - i]=last;
+                } else {
+                    last = digits[len - 1 - i] + 1;
+                    digits[len - 1 - i] = last;
                 }
             }
             return digits;
@@ -1296,9 +1300,725 @@ public class LeetCode1to10 {
     public void plusOne() {
 //        int[] nums = new int[]{9};
 //        int[] nums = new int[]{9,9};
-        int[] nums = new int[]{5,6,2,0,0,4,6,2,4,9};
+        int[] nums = new int[]{5, 6, 2, 0, 0, 4, 6, 2, 4, 9};
 //        int[] nums = new int[]{1, 2, 3};
         System.out.println(Arrays.toString(plusOne(nums)));
+    }
+
+    /**
+     * -------------------------70. 爬楼梯-------------------------------------
+     * 假设你正在爬楼梯。需要 n 步你才能到达楼顶。
+     * <p>
+     * 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
+     * <p>
+     * 注意：给定 n 是一个正整数。
+     * <p>
+     * 示例 1：
+     * <p>
+     * 输入： 2
+     * 输出： 2
+     * 解释： 有两种方法可以爬到楼顶。
+     * 1.  1 步 + 1 步
+     * 2.  2 步
+     * 示例 2：
+     * <p>
+     * 输入： 3
+     * 输出： 3
+     * 解释： 有三种方法可以爬到楼顶。
+     * 1.  1 步 + 1 步 + 1 步
+     * 2.  1 步 + 2 步
+     * 3.  2 步 + 1 步
+     *
+     * @param n
+     * @return
+     */
+    public int climbStairs(int n) {
+        if (n <= 1) {
+            return n;
+        }
+        int last = 1, lastLast = 1;
+        int now = 0;
+        for (int i = 2; i <= n; i++) {
+            now = last + lastLast;
+            lastLast = last;
+            last = now;
+        }
+        return now;
+    }
+
+    @Test
+    public void climbStairs() {
+        System.out.println(climbStairs(3));
+        System.out.println(climbStairs(2));
+    }
+
+    /**
+     * 83 Remove Duplicates from Sorted List
+     * <p>
+     * Given a sorted linked list, delete all duplicates such that each element appear only once.
+     * <p>
+     * Example 1:
+     * <p>
+     * Input: 1->1->2
+     * Output: 1->2
+     * Example 2:
+     * <p>
+     * Input: 1->1->2->3->3
+     * Output: 1->2->3
+     *
+     * @param head
+     * @return
+     */
+    public ListNode deleteDuplicates(ListNode head) {
+        SortedSet<Integer> set = new TreeSet<>();
+        while (head != null) {
+            set.add(head.val);
+            head = head.next;
+        }
+        Iterator<Integer> iterator = set.iterator();
+        ListNode listNode = null;
+        while (iterator.hasNext()) {
+            if (listNode == null) {
+                listNode = new ListNode(iterator.next());
+                head = listNode;
+            } else {
+                listNode.next = new ListNode(iterator.next());
+                listNode = listNode.next;
+            }
+        }
+        return head;
+    }
+
+    @Test
+    public void deleteDuplicates() {
+
+        ListNode l5 = new ListNode(1);
+        ListNode l6 = new ListNode(1);
+        ListNode l7 = new ListNode(2);
+        l5.next = l6;
+        l6.next = l7;
+
+        System.out.println(deleteDuplicates(l5));
+
+    }
+
+    /**
+     * ------------------------88---------------------------
+     * Merge Sorted Array
+     * Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as one sorted array.
+     * <p>
+     * Note:
+     * <p>
+     * The number of elements initialized in nums1 and nums2 are m and n respectively.
+     * You may assume that nums1 has enough space (size that is greater or equal to m + n) to hold additional elements from nums2.
+     * Example:
+     * <p>
+     * Input:
+     * nums1 = [1,2,3,0,0,0], m = 3
+     * nums2 = [2,5,6],       n = 3
+     * <p>
+     * Output: [1,2,2,3,5,6]
+     *
+     * @param nums1
+     * @param m
+     * @param nums2
+     * @param n
+     */
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        List<Integer> list = new LinkedList<>();
+        for (int i = 0; i < m; i++) {
+            list.add(nums1[i]);
+        }
+        for (int j = 0; j < n; j++) {
+            list.add(nums2[j]);
+        }
+        Collections.sort(list);
+        for (int i = 0; i < list.size(); i++) {
+            nums1[i] = list.get(i);
+        }
+    }
+
+    @Test
+    public void merge() {
+        int[] nums1 = new int[]{};
+        int[] nums2 = new int[]{};
+        int m = nums1.length;
+        int n = nums2.length;
+        merge(nums1, m, nums2, n);
+        System.out.println(Arrays.toString(nums1));
+    }
+
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
+    }
+
+    /**
+     * -----------------100. 相同的树--------------------
+     * 给定两个二叉树，编写一个函数来检验它们是否相同。
+     * <p>
+     * 如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的。
+     * <p>
+     * 示例 1:
+     * <p>
+     * 输入:       1         1
+     * / \       / \
+     * 2   3     2   3
+     * <p>
+     * [1,2,3],   [1,2,3]
+     * <p>
+     * 输出: true
+     * 示例 2:
+     * <p>
+     * 输入:      1          1
+     * /           \
+     * 2             2
+     * <p>
+     * [1,2],     [1,null,2]
+     * <p>
+     * 输出: false
+     * 示例 3:
+     * <p>
+     * 输入:       1         1
+     * / \       / \
+     * 2   1     1   2
+     * <p>
+     * [1,2,1],   [1,1,2]
+     * <p>
+     * 输出: false
+     *
+     * @param p
+     * @param q
+     * @return
+     */
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (p == null && q == null) {
+            return true;
+        }
+        if (p == null && q != null) {
+            return false;
+        }
+        if (q == null && p != null) {
+            return false;
+        }
+        if (p.val != q.val) {
+            return false;
+        }
+        if (!isSameTree(p.left, q.left)) {
+            return false;
+        }
+        if (!isSameTree(p.right, q.right)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Test
+    public void isSameTree() {
+        TreeNode treeNode = new TreeNode(1);
+        TreeNode treeNode1 = new TreeNode(2);
+        TreeNode treeNode2 = new TreeNode(3);
+
+        treeNode.left = treeNode1;
+        treeNode.right = treeNode2;
+
+        TreeNode treeNode3 = new TreeNode(1);
+        TreeNode treeNode4 = new TreeNode(2);
+        TreeNode treeNode5 = new TreeNode(3);
+
+        treeNode3.left = treeNode4;
+        treeNode3.right = treeNode5;
+
+
+        System.out.println(isSameTree(treeNode, treeNode3));
+    }
+
+
+    /**
+     * --------------104二叉树的最大深度--------------------
+     * 给定一个二叉树，找出其最大深度。
+     * 二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
+     * 说明: 叶子节点是指没有子节点的节点。
+     * 示例：
+     * 给定二叉树 [3,9,20,null,null,15,7]，
+     * 3
+     * / \
+     * 9  20
+     * /  \
+     * 15   7
+     * 返回它的最大深度 3 。
+     *
+     * @param root
+     * @return
+     */
+    public int maxDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        return getDepth(root);
+    }
+
+    private int getDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+        int i = getDepth(left);
+        int j = getDepth(right);
+        return i > j ? i + 1 : j + 1;
+    }
+
+
+    @Test
+    public void maxDepth() {
+        TreeNode treeNode = new TreeNode(3);
+
+        TreeNode treeNode1 = new TreeNode(9);
+        TreeNode treeNode2 = new TreeNode(20);
+
+        treeNode.left = treeNode1;
+        treeNode.right = treeNode2;
+
+        TreeNode treeNode3 = new TreeNode(15);
+        TreeNode treeNode4 = new TreeNode(7);
+
+        treeNode2.left = treeNode3;
+        treeNode2.right = treeNode4;
+
+        System.out.println(maxDepth(treeNode));
+    }
+
+    int depth;
+
+    /**
+     * --------------------101. 对称二叉树----------
+     * <p>
+     * 给定一个二叉树，检查它是否是镜像对称的。
+     * <p>
+     * 例如，二叉树 [1,2,2,3,4,4,3] 是对称的。
+     * <p>
+     * 1
+     * / \
+     * 2   2
+     * / \ / \
+     * 3  4 4  3
+     * 但是下面这个 [1,2,2,null,3,null,3] 则不是镜像对称的:
+     * <p>
+     * 1
+     * / \
+     * 2   2
+     * \   \
+     * 3    3
+     * 说明:
+     * <p>
+     * 如果你可以运用递归和迭代两种方法解决这个问题，会很加分。
+     *
+     * @param root
+     * @return
+     */
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        return getNodeEntryList(root.left, root.right);
+    }
+
+    private boolean getNodeEntryList(TreeNode l, TreeNode r) {
+        if (l == null && r == null) return true;
+        if ((l != null && r == null) || (r != null && l == null)) return false;
+        return (l.val == r.val) && getNodeEntryList(l.left, r.right) && getNodeEntryList(l.right, r.left);
+    }
+
+    @Test
+    public void isSymmetric() {
+        TreeNode treeNode = new TreeNode(1);
+
+        TreeNode treeNode1 = new TreeNode(2);
+        TreeNode treeNode2 = new TreeNode(2);
+
+        treeNode.left = treeNode1;
+        treeNode.right = treeNode2;
+
+        TreeNode treeNode3 = new TreeNode(3);
+        TreeNode treeNode4 = new TreeNode(4);
+        treeNode1.left = treeNode3;
+        treeNode1.right = treeNode4;
+
+        TreeNode treeNode5 = new TreeNode(4);
+        TreeNode treeNode6 = new TreeNode(3);
+
+        treeNode2.left = treeNode5;
+        treeNode2.right = treeNode6;
+
+        System.out.println(isSymmetric(treeNode));
+    }
+
+
+    /**
+     * 二叉树的层次遍历 II
+     * 给定一个二叉树，返回其节点值自底向上的层次遍历。 （即按从叶子节点所在层到根节点所在的层，逐层从左向右遍历）
+     * <p>
+     * 例如：
+     * 给定二叉树 [3,9,20,null,null,15,7],
+     * 3
+     * / \
+     * 9  20
+     * /  \
+     * 15   7
+     * 返回其自底向上的层次遍历为：
+     * [
+     * [15,7],
+     * [9,20],
+     * [3]
+     * ]
+     *
+     * @param root
+     * @return
+     */
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        if (root == null) {
+            return new LinkedList<>();
+        }
+        List<List<Integer>> list = new LinkedList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            List<Integer> integers = new LinkedList<>();
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode poll = queue.poll();
+                integers.add(poll.val);
+                if (poll.left != null) {
+                    queue.add(poll.left);
+                }
+                if (poll.right != null) {
+                    queue.add(poll.right);
+                }
+            }
+            list.add(integers);
+        }
+        Collections.reverse(list);
+        return list;
+    }
+
+    @Test
+    public void levelOrderBottom() {
+        TreeNode treeNode = new TreeNode(1);
+
+        TreeNode treeNode1 = new TreeNode(3);
+
+        treeNode.left = treeNode1;
+        System.out.println(levelOrderBottom(treeNode));
+    }
+
+    /**
+     * ---------------------平衡二叉树-------------
+     * 给定一个二叉树，判断它是否是高度平衡的二叉树。
+     * 本题中，一棵高度平衡二叉树定义为：
+     * 一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过1。
+     * 示例 1:
+     * 给定二叉树 [3,9,20,null,null,15,7]
+     * 3
+     * / \
+     * 9  20
+     * /  \
+     * 15   7
+     * 返回 true 。
+     * 示例 2:
+     * 给定二叉树 [1,2,2,3,3,null,null,4,4]
+     * 1
+     * / \
+     * 2   2
+     * / \
+     * 3   3
+     * / \
+     * 4   4
+     * 返回 false 。
+     *
+     * @param root
+     * @return
+     */
+    public boolean isBalanced(TreeNode root) {
+        return isBalanced(root, 0, 0);
+    }
+
+
+    @Test
+    public void isBalanced() {
+        TreeNode treeNode = new TreeNode(1);
+
+        TreeNode treeNode1 = new TreeNode(3);
+
+        treeNode.left = treeNode1;
+        System.out.println(isBalanced(treeNode));
+    }
+
+
+    public boolean isBalanced(TreeNode root, int min, int max) {
+        if (root == null) {
+            return max - min <= 1;
+        }
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+        if (left == null && right == null) {
+            return max - min <= 1;
+        }
+        if (left == null && right != null) {
+            return isBalanced(root.right, min, max + 1);
+        }
+        if (left != null && right == null) {
+            return isBalanced(root.left, min, max + 1);
+        }
+        return isBalanced(root.left, min + 1, max + 1) || isBalanced(root.right, min + 1, max + 1);
+    }
+
+    /**
+     * ----------------112. 路径总和-----------------
+     * 给定一个二叉树和一个目标和，判断该树中是否存在根节点到叶子节点的路径，这条路径上所有节点值相加等于目标和。
+     * <p>
+     * 说明: 叶子节点是指没有子节点的节点。
+     * <p>
+     * 示例:
+     * 给定如下二叉树，以及目标和 sum = 22，
+     * <p>
+     * 5
+     * / \
+     * 4   8
+     * /   / \
+     * 11  13  4
+     * /  \      \
+     * 7    2      1
+     * 返回 true, 因为存在目标和为 22 的根节点到叶子节点的路径 5->4->11->2。
+     *
+     * @param root
+     * @param sum
+     * @return
+     */
+    public boolean hasPathSum(TreeNode root, int sum) {
+        if (root == null) {
+            return false;
+        }
+        if (root.left == null && root.right == null) {
+            return sum == root.val;
+        }
+        sum -= root.val;
+        if (root.left == null && root.right != null) {
+            return hasPathSum(root.right, sum);
+        }
+        if (root.right == null && root.left != null) {
+            return hasPathSum(root.left, sum);
+        }
+        return hasPathSum(root.left, sum) || hasPathSum(root.right, sum);
+    }
+
+    @Test
+    public void hasPathSum() {
+        TreeNode treeNode = new TreeNode(-2);
+        TreeNode treeNode1 = new TreeNode(0);
+        TreeNode treeNode2 = new TreeNode(-3);
+
+        treeNode.left = treeNode1;
+        treeNode.right = treeNode2;
+        System.out.println(hasPathSum(treeNode, -5));
+    }
+
+    /**
+     * ---------------------------118. 杨辉三角---------------------------
+     * 给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。
+     *
+     * @param numRows
+     * @return
+     */
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> result = new LinkedList<>();
+        for (int i = 0; i < numRows; i++) {
+            List<Integer> list = new LinkedList<>();
+            for (int j = 0; j < i + 1; j++) {
+                list.add(0, 1);
+                for (int k = 1; k < list.size() - 1; k++) {
+                    list.set(k, list.get(k) + list.get(k + 1));
+                }
+            }
+            result.add(list);
+        }
+        return result;
+    }
+
+    @Test
+    public void generate() {
+        System.out.println(generate(5));
+    }
+
+
+    /**
+     * ---------------------------118. 杨辉三角---------------------------
+     * 给定一个非负整数 numRows，生成杨辉三角的第 numRows 行。
+     *
+     * @param rowIndex
+     * @return
+     */
+    public List<Integer> getRow(int rowIndex) {
+        List<Integer> list = new LinkedList<>();
+        for (int j = 0; j < rowIndex + 1; j++) {
+            list.add(0, 1);
+            for (int k = 1; k < list.size() - 1; k++) {
+                list.set(k, list.get(k) + list.get(k + 1));
+            }
+        }
+        return list;
+    }
+
+    /**
+     * ----------------------108. 将有序数组转换为二叉搜索树-------------------
+     * 将有序数组转换为二叉搜索树
+     * <p>
+     * 将一个按照升序排列的有序数组，转换为一棵高度平衡二叉搜索树。
+     * 本题中，一个高度平衡二叉树是指一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1。
+     * 示例:
+     * 给定有序数组: [-10,-3,0,5,9],
+     * 一个可能的答案是：[0,-3,9,-10,null,5]，它可以表示下面这个高度平衡二叉搜索树：
+     * 0
+     * / \
+     * -3   9
+     * /   /
+     * -10  5
+     *
+     * @param nums
+     * @return
+     */
+    public TreeNode sortedArrayToBST(int[] nums) {
+        TreeNode root = null;
+        int len = nums.length;
+        for (int i = 0; i < len - 1; i++) {
+            if (nums[i] > nums[i + 1]) {
+                int tmp = nums[i];
+                nums[i] = nums[i + 1];
+                nums[i + 1] = tmp;
+            }
+        }
+        return root;
+    }
+
+
+    @Test
+    public void sortedArrayToBST() {
+        int[] nums = new int[]{1, 2, 3};
+        System.out.println(sortedArrayToBST(nums));
+    }
+
+
+    /**
+     * --------------121. 买卖股票的最佳时机---------------
+     *
+     给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
+
+     如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。
+
+     注意你不能在买入股票前卖出股票。
+
+     示例 1:
+
+     输入: [7,1,5,3,6,4]
+     输出: 5
+     解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。
+     注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。
+     示例 2:
+
+     输入: [7,6,4,3,1]
+     输出: 0
+     解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
+     * @param prices
+     * @return
+     */
+    public int maxProfit(int[] prices) {
+        int len=prices.length;
+        int max=0;
+        for (int i = 0; i < len-1; i++) {
+            for (int j = i+1; j <len ; j++) {
+                int price=prices[j]-prices[i];
+                if (price>=0){
+                    max=max>price?max:price;
+                }
+            }
+        }
+        return max;
+    }
+
+    @Test
+    public void maxProfit() {
+        int[] prices=new int[]{7,1,5,3,6,4};
+        System.out.println(maxProfit(prices));
+    }
+
+    /**
+     * ---------------------买卖股票的最佳时机 II----------------------
+     *
+     给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
+
+     设计一个算法来计算你所能获取的最大利润。你可以尽可能地完成更多的交易（多次买卖一支股票）。
+
+     注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+
+     示例 1:
+
+     输入: [7,1,5,3,6,4]
+     输出: 7
+     解释: 在第 2 天（股票价格 = 1）的时候买入，在第 3 天（股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5-1 = 4 。
+     随后，在第 4 天（股票价格 = 3）的时候买入，在第 5 天（股票价格 = 6）的时候卖出, 这笔交易所能获得利润 = 6-3 = 3 。
+     示例 2:
+
+     输入: [1,2,3,4,5]
+     输出: 4
+     解释: 在第 1 天（股票价格 = 1）的时候买入，在第 5 天 （股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5-1 = 4 。
+     注意你不能在第 1 天和第 2 天接连购买股票，之后再将它们卖出。
+     因为这样属于同时参与了多笔交易，你必须在再次购买前出售掉之前的股票。
+     示例 3:
+
+     输入: [7,6,4,3,1]
+     输出: 0
+     解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
+     * @param prices
+     * @return
+     */
+    public int maxProfit2(int[] prices) {
+        int len=prices.length;
+        int max=0;
+        for (int i = 0; i <len-1; i++) {
+            List<Pair<Integer,Integer>> pairs=new LinkedList<>();
+            for (int j = i+1; j <len ; j++) {
+                int price=prices[j]-prices[i];
+                if (price>=0){
+                    i=j-1>=i?j-1:j;
+                    max+=price;
+                    pairs.add(new Pair<>(i, price));
+                }
+            }
+        }
+        return max;
+    }
+
+    @Test
+    public void maxProfit2() {
+//        int[] prices=new int[]{7,1,5,3,6,4};
+//        int[] prices=new int[]{1,2,3,4,5};
+        int[] prices=new int[]{7,1,5,3,6,4};
+        System.out.println(maxProfit2(prices));
+    }
+
+    /**
+     * ---------------125. 验证回文串--------------
+     *
+     * @param s
+     * @return
+     */
+    public boolean isPalindrome(String s) {
+        return false;
     }
 
 }
