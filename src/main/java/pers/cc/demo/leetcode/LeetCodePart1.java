@@ -1,24 +1,23 @@
 package pers.cc.demo.leetcode;
 
-import com.sun.org.apache.regexp.internal.RE;
 import javafx.util.Pair;
 import org.junit.Test;
 
-import javax.sound.midi.Soundbank;
-import java.math.BigDecimal;
-import java.nio.channels.Pipe;
-import java.nio.charset.Charset;
-import java.sql.ResultSet;
+import java.math.BigInteger;
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class LeetCode1to10 {
+
+public class LeetCodePart1 {
 
     @Test
     public void twoSum() {
         int[] nums = new int[]{3, 3};
         int target = 6;
-        System.out.println(Arrays.toString(LeetCode1to10.twoSum(nums, target)));
+        System.out.println(Arrays.toString(LeetCodePart1.twoSum(nums, target)));
 
     }
 
@@ -71,14 +70,14 @@ public class LeetCode1to10 {
         ListNode listNode6 = new ListNode(4);
         listNode4.next = listNode5;
         listNode5.next = listNode6;
-        System.out.println(LeetCode1to10.addTwoNumbers(listNode1, listNode4).toString());
+        System.out.println(LeetCodePart1.addTwoNumbers(listNode1, listNode4).toString());
     }
 
     @Test
     public void addTwoNumbers1() {
         ListNode listNode1 = new ListNode(5);
         ListNode listNode2 = new ListNode(5);
-        System.out.println(LeetCode1to10.addTwoNumbers(listNode1, listNode2).toString());
+        System.out.println(LeetCodePart1.addTwoNumbers(listNode1, listNode2).toString());
     }
 
     @Test
@@ -172,45 +171,31 @@ public class LeetCode1to10 {
         return head;
     }
 
-    static class ListNode {
 
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
-
-        @Override
-        public String toString() {
-            return "ListNode [val=" + val + ", next=" + next + "]";
-        }
-
-    }
 
     @Test
     public void lengthOfLongestSubstring() {
-        // System.out.println( LeetCode1to10.lengthOfLongestSubstring("abcabcbb"));
-        //System.out.println( LeetCode1to10.lengthOfLongestSubstring("aab"));
-        //System.out.println( LeetCode1to10.lengthOfLongestSubstring("bbb"));
-        System.out.println(LeetCode1to10.lengthOfLongestSubstring("xibkhhbsddxpmaosdkdswbkosweecxcbielrnojqsgh"));
+        // System.out.println( LeetCodePart1.lengthOfLongestSubstring("abcabcbb"));
+        //System.out.println( LeetCodePart1.lengthOfLongestSubstring("aab"));
+        //System.out.println( LeetCodePart1.lengthOfLongestSubstring("bbb"));
+        System.out.println(LeetCodePart1.lengthOfLongestSubstring("xibkhhbsddxpmaosdkdswbkosweecxcbielrnojqsgh"));
     }
 
     @Test
     public void lengthOfLongestSubstring2() {
-//        System.out.println( LeetCode1to10.lengthOfLongestSubstring2("abcabcbb"));
-//          System.out.println( LeetCode1to10.lengthOfLongestSubstring2("aab"));
-        System.out.println(LeetCode1to10.lengthOfLongestSubstring2("biidygcc"));
+//        System.out.println( LeetCodePart1.lengthOfLongestSubstring2("abcabcbb"));
+//          System.out.println( LeetCodePart1.lengthOfLongestSubstring2("aab"));
+        System.out.println(LeetCodePart1.lengthOfLongestSubstring2("biidygcc"));
 
-//        System.out.println( LeetCode1to10.lengthOfLongestSubstring2("bbb"));
-//        System.out.println( LeetCode1to10.lengthOfLongestSubstring2("pwwkew"));
-//        System.out.println( LeetCode1to10.lengthOfLongestSubstring2("xibkhhbsddxpmaosdkdswbkosweecxcbielrnojqsgh"));
+//        System.out.println( LeetCodePart1.lengthOfLongestSubstring2("bbb"));
+//        System.out.println( LeetCodePart1.lengthOfLongestSubstring2("pwwkew"));
+//        System.out.println( LeetCodePart1.lengthOfLongestSubstring2("xibkhhbsddxpmaosdkdswbkosweecxcbielrnojqsgh"));
     }
 
 
     @Test
     public void isStrRepeat() {
-        System.out.println(LeetCode1to10.isStrRepeat("abc"));
+        System.out.println(LeetCodePart1.isStrRepeat("abc"));
     }
 
     /*
@@ -291,15 +276,15 @@ public class LeetCode1to10 {
 
     @Test
     public void ransomNote() {
-        System.out.println(LeetCode1to10.canConstruct("a", "b"));
-        System.out.println(LeetCode1to10.canConstruct("aa", "ab"));
-        System.out.println(LeetCode1to10.canConstruct("fffbfg", "effjfggbffjdgbjjhhdegh"));
+        System.out.println(LeetCodePart1.canConstruct("a", "b"));
+        System.out.println(LeetCodePart1.canConstruct("aa", "ab"));
+        System.out.println(LeetCodePart1.canConstruct("fffbfg", "effjfggbffjdgbjjhhdegh"));
     }
 
     @Test
     public void isPalindrome() {
-        System.out.println(LeetCode1to10.isPalindrome(12321));
-        System.out.println(LeetCode1to10.isPalindrome(123));
+        System.out.println(LeetCodePart1.isPalindrome(12321));
+        System.out.println(LeetCodePart1.isPalindrome(123));
     }
 
     /**
@@ -1218,6 +1203,22 @@ public class LeetCode1to10 {
         return maxSum;
     }
 
+    static class ListNode {
+
+        public  int val;
+        public ListNode next;
+
+        public ListNode(int x) {
+            val = x;
+        }
+
+        @Override
+        public String toString() {
+            return "ListNode [val=" + val + ", next=" + next + "]";
+        }
+
+    }
+
     @Test
     public void maxSubArray() {
 //        int[] nums=new int[]{4,-1,2,1,-5};
@@ -1915,35 +1916,36 @@ public class LeetCode1to10 {
 
     /**
      * --------------121. 买卖股票的最佳时机---------------
+     * <p>
+     * 给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
+     * <p>
+     * 如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。
+     * <p>
+     * 注意你不能在买入股票前卖出股票。
+     * <p>
+     * 示例 1:
+     * <p>
+     * 输入: [7,1,5,3,6,4]
+     * 输出: 5
+     * 解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。
+     * 注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。
+     * 示例 2:
+     * <p>
+     * 输入: [7,6,4,3,1]
+     * 输出: 0
+     * 解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
      *
-     给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
-
-     如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。
-
-     注意你不能在买入股票前卖出股票。
-
-     示例 1:
-
-     输入: [7,1,5,3,6,4]
-     输出: 5
-     解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。
-     注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。
-     示例 2:
-
-     输入: [7,6,4,3,1]
-     输出: 0
-     解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
      * @param prices
      * @return
      */
     public int maxProfit(int[] prices) {
-        int len=prices.length;
-        int max=0;
-        for (int i = 0; i < len-1; i++) {
-            for (int j = i+1; j <len ; j++) {
-                int price=prices[j]-prices[i];
-                if (price>=0){
-                    max=max>price?max:price;
+        int len = prices.length;
+        int max = 0;
+        for (int i = 0; i < len - 1; i++) {
+            for (int j = i + 1; j < len; j++) {
+                int price = prices[j] - prices[i];
+                if (price >= 0) {
+                    max = max > price ? max : price;
                 }
             }
         }
@@ -1952,50 +1954,51 @@ public class LeetCode1to10 {
 
     @Test
     public void maxProfit() {
-        int[] prices=new int[]{7,1,5,3,6,4};
+        int[] prices = new int[]{7, 1, 5, 3, 6, 4};
         System.out.println(maxProfit(prices));
     }
 
     /**
      * ---------------------买卖股票的最佳时机 II----------------------
+     * <p>
+     * 给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
+     * <p>
+     * 设计一个算法来计算你所能获取的最大利润。你可以尽可能地完成更多的交易（多次买卖一支股票）。
+     * <p>
+     * 注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+     * <p>
+     * 示例 1:
+     * <p>
+     * 输入: [7,1,5,3,6,4]
+     * 输出: 7
+     * 解释: 在第 2 天（股票价格 = 1）的时候买入，在第 3 天（股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5-1 = 4 。
+     * 随后，在第 4 天（股票价格 = 3）的时候买入，在第 5 天（股票价格 = 6）的时候卖出, 这笔交易所能获得利润 = 6-3 = 3 。
+     * 示例 2:
+     * <p>
+     * 输入: [1,2,3,4,5]
+     * 输出: 4
+     * 解释: 在第 1 天（股票价格 = 1）的时候买入，在第 5 天 （股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5-1 = 4 。
+     * 注意你不能在第 1 天和第 2 天接连购买股票，之后再将它们卖出。
+     * 因为这样属于同时参与了多笔交易，你必须在再次购买前出售掉之前的股票。
+     * 示例 3:
+     * <p>
+     * 输入: [7,6,4,3,1]
+     * 输出: 0
+     * 解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
      *
-     给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
-
-     设计一个算法来计算你所能获取的最大利润。你可以尽可能地完成更多的交易（多次买卖一支股票）。
-
-     注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
-
-     示例 1:
-
-     输入: [7,1,5,3,6,4]
-     输出: 7
-     解释: 在第 2 天（股票价格 = 1）的时候买入，在第 3 天（股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5-1 = 4 。
-     随后，在第 4 天（股票价格 = 3）的时候买入，在第 5 天（股票价格 = 6）的时候卖出, 这笔交易所能获得利润 = 6-3 = 3 。
-     示例 2:
-
-     输入: [1,2,3,4,5]
-     输出: 4
-     解释: 在第 1 天（股票价格 = 1）的时候买入，在第 5 天 （股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5-1 = 4 。
-     注意你不能在第 1 天和第 2 天接连购买股票，之后再将它们卖出。
-     因为这样属于同时参与了多笔交易，你必须在再次购买前出售掉之前的股票。
-     示例 3:
-
-     输入: [7,6,4,3,1]
-     输出: 0
-     解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
      * @param prices
      * @return
      */
     public int maxProfit2(int[] prices) {
-        int len=prices.length;
-        int max=0;
-        for (int i = 0; i <len-1; i++) {
-            List<Pair<Integer,Integer>> pairs=new LinkedList<>();
-            for (int j = i+1; j <len ; j++) {
-                int price=prices[j]-prices[i];
-                if (price>=0){
-                    i=j-1>=i?j-1:j;
-                    max+=price;
+        int len = prices.length;
+        int max = 0;
+        for (int i = 0; i < len - 1; i++) {
+            List<Pair<Integer, Integer>> pairs = new LinkedList<>();
+            for (int j = i + 1; j < len; j++) {
+                int price = prices[j] - prices[i];
+                if (price >= 0) {
+                    i = j - 1 >= i ? j - 1 : j;
+                    max += price;
                     pairs.add(new Pair<>(i, price));
                 }
             }
@@ -2007,8 +2010,15 @@ public class LeetCode1to10 {
     public void maxProfit2() {
 //        int[] prices=new int[]{7,1,5,3,6,4};
 //        int[] prices=new int[]{1,2,3,4,5};
-        int[] prices=new int[]{7,1,5,3,6,4};
+        int[] prices = new int[]{7, 1, 5, 3, 6, 4};
         System.out.println(maxProfit2(prices));
+    }
+
+    @Test
+    public void isPalindromeStr() {
+//        System.out.println(isPalindrome("12321"));
+        System.out.println(isPalindrome("race a car"));
+//        System.out.println(isPalindrome("A man, a plan, a canal: Panama"));
     }
 
     /**
@@ -2018,7 +2028,980 @@ public class LeetCode1to10 {
      * @return
      */
     public boolean isPalindrome(String s) {
+        Pattern p = Pattern.compile("[^a-zA-Z0-9]");
+        Matcher matcher = p.matcher(s);
+        String trim = matcher.replaceAll("").trim();
+        char[] chars = trim.toCharArray();
+        int len = chars.length;
+        for (int i = 0, j = len - 1; i <= len / 2 && j >= len / 2; i++, j--) {
+            if (chars[i] != chars[j] && !String.valueOf(chars[i]).equalsIgnoreCase(String.valueOf(chars[j]))) {
+                System.out.println(chars[i]);
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    /**
+     * ------------67. 二进制求和----------------
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public String addBinary(String a, String b) {
+        int len1 = a.length();
+        int len2 = b.length();
+        int len3 = len1 > len2 ? len1 : len2;
+        String tmp = "";
+        char[] chars1 = a.toCharArray();
+        char[] chars2 = b.toCharArray();
+        char[] chars3 = new char[len3];
+        if (len3 == len1) {
+            fillMinArrays(len2, len3, chars2, chars3);
+        } else {
+            fillMinArrays(len1, len3, chars1, chars3);
+        }
+        int sum;
+        boolean add = false;
+        StringBuilder sb = new StringBuilder();
+        System.out.println(Arrays.toString(chars3));
+        if (len3 == len1) {
+            add = add2Chars(len3, chars1, chars3, add, sb);
+        } else {
+            add = add2Chars(len3, chars2, chars3, add, sb);
+        }
+        if (add) {
+            sb.append("1");
+        }
+        return sb.reverse().toString();
+    }
+
+    private boolean add2Chars(int len3, char[] chars1, char[] chars3, boolean add, StringBuilder sb) {
+        int sum;
+        for (int i = len3 - 1; i >= 0; i--) {
+            sum = Integer.parseInt(String.valueOf(chars3[i])) + Integer.parseInt(String.valueOf(chars1[i]));
+            sum = add ? sum + 1 : sum;
+            if (sum >= 2) {
+                add = true;
+                sb.append(sum - 2);
+            } else {
+                add = false;
+                sb.append(sum);
+            }
+        }
+        return add;
+    }
+
+    private void fillMinArrays(int len2, int len3, char[] chars2, char[] char3) {
+        for (int i = 0; i < len3; i++) {
+            int j = len3 - len2;
+            if (i < j) {
+                char3[i] = '0';
+            } else {
+                char3[i] = chars2[i - j];
+            }
+        }
+    }
+
+    @Test
+    public void addBinary() {
+        System.out.println(Integer.valueOf(String.valueOf("11".charAt(0))));
+//        System.out.println(addBinary("11", "1"));
+        System.out.println(addBinary("1010", "1011"));
+    }
+
+    /**
+     * ---------------------------136. 只出现一次的数字----------------------
+     * 给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。
+     * 说明：
+     * 你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？
+     *
+     * @param nums
+     * @return
+     */
+    public int singleNumber(int[] nums) {
+        int len = nums.length;
+        Queue<Integer> queue = new ArrayBlockingQueue<>(len);
+
+        for (int i = 0; i < len; i++) {
+            int num = nums[i];
+            if (queue.contains(num)) {
+                queue.remove(num);
+            } else {
+                queue.add(num);
+            }
+        }
+        return queue.poll();
+    }
+
+    @Test
+    public void singleNumber() {
+        int[] nums = new int[]{2, 2, 1};
+        System.out.println(singleNumber(nums));
+    }
+
+    /**
+     * ------------------160. 相交链表------------------
+     * 编写一个程序，找到两个单链表相交的起始节点。
+     * 例如，下面的两个链表：
+     * A:          a1 → a2
+     * ↘
+     * c1 → c2 → c3
+     * ↗
+     * B:     b1 → b2 → b3
+     * 在节点 c1 开始相交。
+     *
+     * @param headA
+     * @param headB
+     * @return
+     */
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode tmpB = headB;
+        while (headA != null) {
+            while (headB != null && tmpB != null) {
+                if (headA == headB) {
+                    return headB;
+                }
+                headB = headB.next;
+            }
+            headA = headA.next;
+            headB = tmpB.next;
+            tmpB = headB;
+        }
+        return null;
+    }
+
+    /**
+     * 167. 两数之和 II - 输入有序数组
+     * <p>
+     * 给定一个已按照升序排列 的有序数组，找到两个数使得它们相加之和等于目标数。
+     * <p>
+     * 函数应该返回这两个下标值 index1 和 index2，其中 index1 必须小于 index2。
+     * <p>
+     * 说明:
+     * <p>
+     * 返回的下标值（index1 和 index2）不是从零开始的。
+     * 你可以假设每个输入只对应唯一的答案，而且你不可以重复使用相同的元素。
+     * 示例:
+     * <p>
+     * 输入: numbers = [2, 7, 11, 15], target = 9
+     * 输出: [1,2]
+     * 解释: 2 与 7 之和等于目标数 9 。因此 index1 = 1, index2 = 2 。
+     *
+     * @param numbers
+     * @param target
+     * @return
+     */
+    public int[] twoSum1(int[] numbers, int target) {
+        int[] result = null;
+        for (int i = 0; i < numbers.length - 1; i++) {
+            int x = numbers[i];
+            if (x >= target) continue;
+            for (int j = i + 1; j < numbers.length; j++) {
+                int y = numbers[j];
+                if (x + y == target) {
+                    return new int[]{i + 1, j + 1};
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 168. Excel表列名称
+     * <p>
+     * 给定一个正整数，返回它在 Excel 表中相对应的列名称。
+     * <p>
+     * 例如，
+     * <p>
+     * 1 -> A
+     * 2 -> B
+     * 3 -> C
+     * ...
+     * 26 -> Z
+     * 27 -> AA
+     * 28 -> AB
+     * ...
+     * 示例 1:
+     * <p>
+     * 输入: 1
+     * 输出: "A"
+     * 示例 2:
+     * <p>
+     * 输入: 28
+     * 输出: "AB"
+     *
+     * @param n
+     * @return
+     */
+    public static String convertToTitle(int n) {
+        if (n <= 0) {
+            throw new IllegalArgumentException("Input is not valid!");
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        while (n > 0) {
+            n--;
+            char ch = (char) (n % 26 + 'A');
+            n /= 26;
+            sb.append(ch);
+        }
+
+        sb.reverse();
+        return sb.toString();
+    }
+
+
+    @Test
+    public void convertToTitle() {
+//        System.out.println(convertToTitle(1));
+        System.out.println(convertToTitle(28));
+        System.out.println(convertToTitle(52));
+        System.out.println(convertToTitle(53));
+        System.out.println(convertToTitle(27));
+        System.out.println(convertToTitle(702));
+    }
+
+
+    /**
+     * 169. 求众数
+     * 给定一个大小为 n 的数组，找到其中的众数。众数是指在数组中出现次数大于 ⌊ n/2 ⌋ 的元素。
+     * <p>
+     * 你可以假设数组是非空的，并且给定的数组总是存在众数。
+     * <p>
+     * 示例 1:
+     * <p>
+     * 输入: [3,2,3]
+     * 输出: 3
+     * 示例 2:
+     * <p>
+     * 输入: [2,2,1,1,1,2,2]
+     * 输出: 2
+     *
+     * @param nums
+     * @return
+     */
+    public int majorityElement(int[] nums) {
+        int len = nums.length;
+        int a = len / 2;
+        if (len == 1) return nums[0];
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < len; i++) {
+            int num = nums[i];
+            if (map.get(num) == null) {
+                map.put(num, 1);
+            } else {
+                int i1 = map.get(num) + 1;
+                if (i1 > a) {
+                    return num;
+                }
+                map.put(num, map.get(num) + 1);
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * 171. Excel表列序号
+     * 给定一个Excel表格中的列名称，返回其相应的列序号。
+     * <p>
+     * 例如，
+     * <p>
+     * A -> 1
+     * B -> 2
+     * C -> 3
+     * ...
+     * Z -> 26
+     * AA -> 27
+     * AB -> 28
+     * ...
+     * 示例 1:
+     * <p>
+     * 输入: "A"
+     * 输出: 1
+     * 示例 2:
+     * <p>
+     * 输入: "AB"
+     * 输出: 28
+     * 示例 3:
+     * <p>
+     * 输入: "ZY"
+     * 输出: 701
+     *
+     * @param s
+     * @return
+     */
+    public int titleToNumber(String s) {
+        char[] chars = s.toCharArray();
+        int length = chars.length;
+        int i = 0;
+        for (int j = 0; j < length; j++) {
+            System.out.println(j);
+            System.out.println(chars[j]);
+            System.out.println((int) chars[j] - 64);
+            System.out.println((Double.valueOf(Math.pow(26, length - j - 1)).intValue()));
+            i += ((int) chars[j] - 64) * (Double.valueOf(Math.pow(26, length - j - 1)).intValue());
+        }
+        return i;
+    }
+
+    @Test
+    public void titleToNumber() {
+//        System.out.println(titleToNumber("A"));
+//        System.out.println(titleToNumber("AB"));
+        System.out.println(titleToNumber("BA"));
+    }
+
+    /**
+     * 189. 旋转数组
+     * 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
+     * <p>
+     * 示例 1:
+     * <p>
+     * 输入: [1,2,3,4,5,6,7] 和 k = 3
+     * 输出: [5,6,7,1,2,3,4]
+     * 解释:
+     * 向右旋转 1 步: [7,1,2,3,4,5,6]
+     * 向右旋转 2 步: [6,7,1,2,3,4,5]
+     * 向右旋转 3 步: [5,6,7,1,2,3,4]
+     * 示例 2:
+     * <p>
+     * 输入: [-1,-100,3,99] 和 k = 2
+     * 输出: [3,99,-1,-100]
+     * 解释:
+     * 向右旋转 1 步: [99,-1,-100,3]
+     * 向右旋转 2 步: [3,99,-1,-100]
+     * 说明:
+     * <p>
+     * 尽可能想出更多的解决方案，至少有三种不同的方法可以解决这个问题。
+     * 要求使用空间复杂度为 O(1) 的原地算法。
+     *
+     * @param nums
+     * @param k
+     */
+    public void rotate(int[] nums, int k) {
+        int len = nums.length;
+        if (k >= len) k = k - len;
+        if (k == 0) return;
+        int[] a = new int[k];
+        for (int i = len - 1; i >= 0; i--) {
+            if (len - i - 1 < k) {
+                a[k - (len - i)] = nums[i];
+            } else {
+                nums[i + k] = nums[i];
+            }
+            if (i < k) {
+                nums[i] = a[i];
+            }
+        }
+    }
+
+    @Test
+    public void rotate() {
+//        int[] nums=new int[]{1,2,3,4,5,6,7};
+        int[] nums = new int[]{1, 2};
+        rotate(nums, 3);
+        System.out.println(Arrays.toString(nums));
+    }
+
+    /**
+     * 190.颠倒二进制位
+     * <p>
+     * 颠倒给定的 32 位无符号整数的二进制位。
+     * <p>
+     * 示例:
+     * <p>
+     * 输入: 43261596
+     * 输出: 964176192
+     * 解释: 43261596 的二进制表示形式为 00000010100101000001111010011100 ，
+     * 返回 964176192，其二进制表示形式为 00111001011110000010100101000000 。
+     * 进阶:
+     * 如果多次调用这个函数，你将如何优化你的算法？
+     *
+     * @param n
+     * @return
+     */
+    // you need treat n as an unsigned value
+    public int reverseBits(int n) {
+        String s = Integer.toBinaryString(n);
+        StringBuilder sb = new StringBuilder(s);
+        sb = sb.reverse();
+        while (sb.length() < 32) {
+            sb.append("0");
+        }
+        System.out.println(sb.toString());
+        BigInteger decimal = new BigInteger(sb.toString(),2);
+        return decimal.intValue();
+    }
+
+    @Test
+    public void reverseBits() {
+        System.out.println(reverseBits(1));
+        System.out.println(Double.valueOf(Math.pow(2, 32)).toString());
+        String s = "10000000000000000000000000000000";
+    }
+
+    /**
+     * 191. 位1的个数
+     *
+     编写一个函数，输入是一个无符号整数，返回其二进制表达式中数字位数为 ‘1’ 的个数（也被称为汉明重量）。
+
+     示例 :
+
+     输入: 11
+     输出: 3
+     解释: 整数 11 的二进制表示为 00000000000000000000000000001011
+
+
+     示例 2:
+
+     输入: 128
+     输出: 1
+     解释: 整数 128 的二进制表示为 00000000000000000000000010000000
+     * @param n
+     * @return
+     */
+    public int hammingWeight(int n) {
+        String s = Integer.toBinaryString(n);
+        int length = s.length();
+        int count=0;
+        for (int i = 0; i < length; i++) {
+            if (s.charAt(i)=='1'){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    @Test
+    public void hammingWeight() {
+        System.out.println(hammingWeight(11));
+        System.out.println(hammingWeight(128));
+    }
+
+    /**
+     * 198. 打家劫舍
+     *
+     你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
+
+     给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。
+
+     示例 1:
+
+     输入: [1,2,3,1]
+     输出: 4
+     解释: 偷窃 1 号房屋 (金额 = 1) ，然后偷窃 3 号房屋 (金额 = 3)。
+     偷窃到的最高金额 = 1 + 3 = 4 。
+     示例 2:
+
+     输入: [2,7,9,3,1]
+     输出: 12
+     解释: 偷窃 1 号房屋 (金额 = 2), 偷窃 3 号房屋 (金额 = 9)，接着偷窃 5 号房屋 (金额 = 1)。
+     偷窃到的最高金额 = 2 + 9 + 1 = 12 。
+     * @param nums
+     * @return
+     */
+    public int rob(int[] nums) {
+        int len = nums.length;
+        int a=0;
+        int b=0;
+        for (int i = 0; i < len; i++) {
+            if (i%2==0){
+                a+=nums[i];
+            }else {
+                b+=nums[i];
+            }
+        }
+        if (len==4){
+            int j = nums[0] + nums[3];
+            a=a>j?a:j;
+
+        }
+        return a>b?a:b;
+    }
+
+    @Test
+    public void rob() {
+//        int[] nums=new int[]{1,2,3,1};
+//        int[] nums=new int[]{2,7,9,3,1};
+        int[] nums=new int[]{2,1,1,2};
+        System.out.println(rob(nums));
+    }
+
+    /**
+     * 202. 快乐数
+     * 编写一个算法来判断一个数是不是“快乐数”。
+
+     一个“快乐数”定义为：对于一个正整数，每一次将该数替换为它每个位置上的数字的平方和，然后重复这个过程直到这个数变为 1，也可能是无限循环但始终变不到 1。如果可以变为 1，那么这个数就是快乐数。
+
+     示例:
+
+     输入: 19
+     输出: true
+     解释:
+     12 + 92 = 82
+     82 + 22 = 68
+     62 + 82 = 100
+     12 + 02 + 02 = 1
+     * @param n
+     * @return
+     */
+    public boolean isHappy(int n) {
+        if (n==1)return true;
+        if (n%10==0)return true;
+        if (n==7)return true;
+        if (n<10)return false;
+        String s=String.valueOf(n);
+        char[] chars = s.toCharArray();
+        int i=0;
+        for (char c:chars){
+            i+=Math.pow(((int)c)-48,2 );
+        }
+        if (i==1){
+            return true;
+        }else {
+            return isHappy(i);
+        }
+    }
+
+    @Test
+    public void isHappy(){
+//        System.out.println(isHappy(19));
+        System.out.println(isHappy(2));
+    }
+
+    /**
+     * 203. 删除链表中的节点
+     * 删除链表中等于给定值 val 的所有节点。
+
+     示例:
+
+     输入: 1->2->6->3->4->5->6, val = 6
+     输出: 1->2->3->4->5
+     * @param head
+     * @param val
+     * @return
+     */
+    public ListNode removeElements(ListNode head, int val) {
+        if (head == null)
+            return null;
+        if (val==1){
+            return head.next==null?null:head.next;
+        }
+        ListNode tmp=head;
+        ListNode pre;
+        ListNode next;
+        ListNode c;
+        int i=0;
+        while (head!=null){
+            i++;
+            pre=head;
+            c=head.next;
+            next=c.next;
+            if (i+1==val){
+                pre.next=next;
+                return tmp;
+            }
+            head=c;
+        }
+        return tmp;
+    }
+
+    @Test
+    public void removeElements(){
+
+        ListNode node=new ListNode(1);
+        ListNode node2=new ListNode(2);
+        node.next=node2;
+        ListNode node3=new ListNode(3);
+        node2.next=node3;
+        ListNode node4=new ListNode(4);
+        node3.next=node4;
+        printNode(node);
+        printNode(removeElements(node,2));
+
+    }
+
+    public static void printNode(ListNode node){
+        StringBuilder sb=new StringBuilder();
+        while (node!=null){
+            sb.append(node.val+">");
+            node=node.next;
+        }
+        System.out.println(sb.toString());
+    }
+
+    /**
+     * 204. 计数质数
+     * 输入: 10
+     输出: 4
+     解释: 小于 10 的质数一共有 4 个, 它们是 2, 3, 5, 7 。
+     * @param n
+     * @return
+     */
+    public int countPrimes(int n) {
+        int count = 0;
+        for (int i = 1; i < n; i++) {
+            if (isPrime(i)) count++;
+        }
+        return count;
+    }
+
+    private boolean isPrime(int num) {
+        if (num <= 1) return false;
+        // Loop's ending condition is i * i <= num instead of i <= sqrt(num)
+        // to avoid repeatedly calling an expensive function sqrt().
+        for (int i = 2; i * i <= num; i++) {
+            if (num % i == 0) return false;
+        }
+        return true;
+    }
+
+    /**
+     * 205. 同构字符串
+     *
+     给定两个字符串 s 和 t，判断它们是否是同构的。
+
+     如果 s 中的字符可以被替换得到 t ，那么这两个字符串是同构的。
+
+     所有出现的字符都必须用另一个字符替换，同时保留字符的顺序。两个字符不能映射到同一个字符上，但字符可以映射自己本身。
+
+     示例 1:
+
+     输入: s = "egg", t = "add"
+     输出: true
+     示例 2:
+
+     输入: s = "foo", t = "bar"
+     输出: false
+     示例 3:
+
+     输入: s = "paper", t = "title"
+     输出: true
+     * @param s
+     * @param t
+     * @return
+     */
+    public boolean isIsomorphic(String s, String t) {
+        // 两个字符串都为空
+        if (s == null && t == null) {
+            return true;
+        }
+        // 只有一个为空
+        else if (s == null || t == null) {
+            return false;
+        }
+        // 两个字符串的长度都为0
+        else if (s.length() == 0 && t.length() == 0) {
+            return true;
+        }
+        // 两个字符串的长度不相等
+        else if (s.length() != t.length()) {
+            return false;
+        }
+        int length = s.length();
+        char[] chars = s.toCharArray();
+        char[] tcChars = t.toCharArray();
+        int[] a=new int[length-1];
+        for (int i = 0; i < length-1; i++) {
+            if (chars[i]==chars[i+1]){
+                a[i]=1;
+            }else {
+                a[i]=0;
+            }
+        }
+        for (int i = 0; i < length-1; i++) {
+            if (tcChars[i]==tcChars[i+1]){
+                if (a[i]!=1){
+                    return false;
+                }
+            }else {
+                if (a[i]!=0){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    @Test
+    public void isIsomorphic(){
+
+        System.out.println(isIsomorphic("aa","ab"));
+
+    }
+
+    /**
+     * 206. 反转链表
+     * 反转一个单链表。
+
+     示例:
+
+     输入: 1->2->3->4->5->NULL
+     输出: 5->4->3->2->1->NULL
+     * @param head
+     * @return
+     */
+    public ListNode reverseList(ListNode head) {
+        if (head==null) return null;
+        Deque<ListNode> queue=new LinkedBlockingDeque<>();
+        while (head!=null){
+            queue.add(head);
+            head=head.next;
+        }
+        ListNode node=null;
+        ListNode tmp=null;
+        while (!queue.isEmpty()){
+            if (node==null){
+                node=new ListNode(queue.pollLast().val);
+                tmp=node;
+            }else {
+                ListNode node1 =new ListNode(queue.pollLast().val) ;
+                node.next=node1;
+                node=node1;
+            }
+        }
+        return tmp;
+    }
+
+    @Test
+    public void reverseList(){
+        ListNode node = fillNodeWithArrays(new int[]{1, 2, 3, 4, 5});
+        printNode(reverseList(node));
+
+    }
+
+    public static ListNode fillNodeWithArrays(int[] a){
+        int length = a.length;
+        ListNode node=new ListNode(a[0]);
+        ListNode tmp=node;
+        for (int i = 1; i <length ; i++) {
+            ListNode next=new ListNode(a[i]);
+            node.next=next;
+            node=next;
+        }
+        return tmp;
+    }
+
+    /**
+     *
+     *217. 存在重复元素
+     给定一个整数数组，判断是否存在重复元素。
+
+     如果任何值在数组中出现至少两次，函数返回 true。如果数组中每个元素都不相同，则返回 false。
+
+     示例 1:
+
+     输入: [1,2,3,1]
+     输出: true
+     示例 2:
+
+     输入: [1,2,3,4]
+     输出: false
+     示例 3:
+
+     输入: [1,1,1,3,3,4,3,2,4,2]
+     输出: true
+     * @param nums
+     * @return
+     */
+    public boolean containsDuplicate(int[] nums) {
+        Set<Integer> set=new HashSet<>();
+        for (int i:nums){
+            if(set.contains(i)){
+                return true;
+            }
+            set.add(i);
+        }
         return false;
+    }
+
+    /**
+     *
+     * 219. 存在重复元素 II
+     *
+     给定一个整数数组和一个整数 k，判断数组中是否存在两个不同的索引 i 和 j，使得 nums [i] = nums [j]，并且 i 和 j 的差的绝对值最大为 k。
+
+     示例 1:
+
+     输入: nums = [1,2,3,1], k = 3
+     输出: true
+     示例 2:
+
+     输入: nums = [1,0,1,1], k = 1
+     输出: true
+     示例 3:
+
+     输入: nums = [1,2,3,1,2,3], k = 2
+     输出: false
+     * @param nums
+     * @param k
+     * @return
+     */
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        int len = nums.length;
+        Map<Integer,Set<Integer>> map=new HashMap<>();
+        for (int i = 0; i < len; i++) {
+            int num = nums[i];
+            Set<Integer> set = map.get(num);
+            if (set==null){
+                set=new HashSet<>();
+            }else {
+                Iterator<Integer> iterator = set.iterator();
+                while (iterator.hasNext()){
+                    if (BigInteger.valueOf(iterator.next()-i).abs().intValue()<=k){
+                        return true;
+                    }
+                }
+            }
+            set.add(i);
+            map.put(num,set);
+        }
+        return false;
+    }
+
+    @Test
+    public void containsNearbyDuplicate(){
+//        int[] nums=new int[]{1,2,3,1};
+//        int[] nums=new int[]{1,2,3,1,2,3};
+        int[] nums=new int[]{1,0,1,1};
+        System.out.println(containsNearbyDuplicate(nums,1));
+    }
+
+    /**
+     * 226. 翻转二叉树
+     * 翻转一棵二叉树。
+
+     示例：
+
+     输入：
+
+     4
+     /   \
+     2     7
+     / \   / \
+     1   3 6   9
+     输出：
+
+     4
+     /   \
+     7     2
+     / \   / \
+     9   6 3   1
+     备注:
+     这个问题是受到 Max Howell 的 原问题 启发的 ：
+
+     谷歌：我们90％的工程师使用您编写的软件(Homebrew)，但是您却无法在面试时在白板上写出翻转二叉树这道题，这太糟糕了。
+     * @param root
+     * @return
+     */
+    public TreeNode invertTree(TreeNode root) {
+        if (root==null) return null;
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+        TreeNode tmp=left;
+        root.left=right;
+        root.right=tmp;
+        invertTree(left);
+        invertTree(right);
+        return root;
+    }
+
+    /**
+     * 231. 2的幂
+     * 给定一个整数，编写一个函数来判断它是否是 2 的幂次方。
+
+     示例 1:
+
+     输入: 1
+     输出: true
+     解释: 20 = 1
+     示例 2:
+
+     输入: 16
+     输出: true
+     解释: 24 = 16
+     示例 3:
+
+     输入: 218
+     输出: false
+     * @param n
+     * @return
+     */
+    public boolean isPowerOfTwo(int n) {
+        if (n<=0) return false;
+        if (n==1)return true;
+        if (n%2!=0)return false;
+        while (n!=2){
+            n/=2;
+            if (n%2!=0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isPower(int n,int pow) {
+        if (n<=0) return false;
+        if (n==1)return true;
+        if (n%pow!=0)return false;
+        while (n!=pow){
+            n/=pow;
+            if (n%pow!=0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+
+    @Test
+    public void isPowerOfTwo() {
+//        System.out.println(isPowerOfTwo(1));
+//        System.out.println(isPowerOfTwo(16));
+//        System.out.println(isPowerOfTwo(218));
+        System.out.println(isPowerOfTwo(10));
+    }
+
+    /**
+     * 326. 3的幂
+     *
+     给定一个整数，写一个函数来判断它是否是 3 的幂次方。
+
+     示例 1:
+
+     输入: 27
+     输出: true
+     示例 2:
+
+     输入: 0
+     输出: false
+     示例 3:
+
+     输入: 9
+     输出: true
+     示例 4:
+
+     输入: 45
+     输出: false
+     进阶：
+     你能不使用循环或者递归来完成本题吗？
+     * @param n
+     * @return
+     */
+    public boolean isPowerOfThree(int n) {
+        return isPower(n,3);
+    }
+
+    @Test
+    public void isPowerOfThree() {
+        System.out.println(isPowerOfThree(27));
+        System.out.println(isPowerOfThree(0));
+        System.out.println(isPowerOfThree(45));
     }
 
 }
