@@ -1,6 +1,5 @@
 package pers.cc.demo.leetcode;
 
-import javafx.util.Pair;
 import org.junit.Test;
 
 import java.util.*;
@@ -51,15 +50,7 @@ public class LeetCodePart2 {
         System.out.println(isPalindrome(head));
     }
 
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
 
-        TreeNode(int x) {
-            val = x;
-        }
-    }
 
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
@@ -75,45 +66,6 @@ public class LeetCodePart2 {
         return null;
     }
 
-    public TreeNode fillTreeNode(int[] a) {
-        final int length = a.length;
-        int mLen = Double.valueOf(length * 1.5).intValue();
-        Map<Integer, TreeNode> map = new HashMap<>(mLen);
-        for (int i = 0; i < length; i++) {
-            TreeNode tmp = new TreeNode(a[i]);
-            map.put(i + 1, tmp);
-        }
-        final Set<Map.Entry<Integer, TreeNode>> entries = map.entrySet();
-        for (Map.Entry<Integer, TreeNode> entry : entries) {
-            final Integer key = entry.getKey();
-            final TreeNode value = entry.getValue();
-            final TreeNode lNode = map.get(key * 2);
-            if (lNode == null) {
-                break;
-            }
-            value.left = new TreeNode(lNode.val);
-            if (key % 2 == 0) {
-                final TreeNode treeNode = map.get(key / 2);
-                if (treeNode != null) {
-                    treeNode.left = value;
-                }
-            }
-
-            final TreeNode rNode = map.get(key * 2 + 1);
-            if (rNode == null) {
-                break;
-            }
-            value.right = new TreeNode(rNode.val);
-            if (key % 2 != 0) {
-                final TreeNode treeNode1 = map.get((key - 1) / 2);
-                if (treeNode1 != null) {
-                    treeNode1.right = value;
-                }
-            }
-            map.put(key, value);
-        }
-        return map.get(1);
-    }
 
     public void printTreeNode(TreeNode root) {
         if (root == null) {
@@ -145,8 +97,7 @@ public class LeetCodePart2 {
     @Test
     public void lowestCommonAncestor() {
 //        int[] nums = new int[]{6,2,8,0,4,7,9,0,0,3,5};
-        int[] nums = new int[]{6, 2, 8, 0, 4, 7, 9, 0, 0, 3, 5};
-        final TreeNode root = fillTreeNode(nums);
+        final TreeNode root = TreeNodeUtll.fillTreeNode(Arrays.asList(6, 2, 8, 0, 4, 7, 9, 0, 0, 3, 5));
         printTreeNode(root);
 //        System.out.println(lowestCommonAncestor(root,new TreeNode(2),new TreeNode(8)).val);
         System.out.println(lowestCommonAncestor(root, new TreeNode(2), new TreeNode(4)).val);
@@ -242,7 +193,9 @@ public class LeetCodePart2 {
      * @return
      */
     public List<String> binaryTreePaths(TreeNode root) {
-        if (root == null) return null;
+        if (root == null) {
+            return null;
+        }
         List<String> list = new ArrayList<>();
         iterator(root, list, "");
         return list;
@@ -1156,8 +1109,8 @@ public class LeetCodePart2 {
 
     @Test
     public void sumOfLeftLeaves() {
-        int[] ints = new int[]{3, 9, 20, 15, 7};
-        final TreeNode treeNode = fillTreeNode(ints);
+        List<Integer> list = Arrays.asList(3, 9, 20, 15, 7);
+        final TreeNode treeNode = TreeNodeUtll.fillTreeNode(list);
         System.out.println(sumOfLeftLeaves(treeNode));
     }
 
@@ -1223,8 +1176,8 @@ public class LeetCodePart2 {
 
     @Test
     public void countNodes() {
-        int[] mums = new int[]{1, 2, 3, 4, 5};
-        final TreeNode treeNode = fillTreeNode(mums);
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+        final TreeNode treeNode = TreeNodeUtll.fillTreeNode(list);
         System.out.println(countNodes(treeNode));
     }
 
@@ -1635,8 +1588,8 @@ public class LeetCodePart2 {
 
     @Test
     public void pathSum() {
-        int[] ints = new int[]{10, 5, -3, 3, 2, 11, 3, -2, 1};
-        final TreeNode treeNode = fillTreeNode(ints);
+        List<Integer> list = Arrays.asList(10, 5, -3, 3, 2, 11, 3, -2, 1);
+        final TreeNode treeNode = TreeNodeUtll.fillTreeNode(list);
         System.out.println(pathSum(treeNode, 8));
     }
 

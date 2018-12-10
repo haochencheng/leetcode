@@ -1,6 +1,5 @@
 package pers.cc.demo.leetcode;
 
-import javafx.util.Pair;
 import org.junit.Test;
 
 import java.math.BigInteger;
@@ -9,6 +8,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static java.util.regex.Pattern.*;
 
 
 public class LeetCodePart1 {
@@ -2021,6 +2022,7 @@ public class LeetCodePart1 {
 //        System.out.println(isPalindrome("A man, a plan, a canal: Panama"));
     }
 
+
     /**
      * ---------------125. 验证回文串--------------
      *
@@ -2028,7 +2030,7 @@ public class LeetCodePart1 {
      * @return
      */
     public boolean isPalindrome(String s) {
-        Pattern p = Pattern.compile("[^a-zA-Z0-9]");
+        Pattern p = compile("[^a-zA-Z0-9]");
         Matcher matcher = p.matcher(s);
         String trim = matcher.replaceAll("").trim();
         char[] chars = trim.toCharArray();
@@ -2384,8 +2386,12 @@ public class LeetCodePart1 {
      */
     public void rotate(int[] nums, int k) {
         int len = nums.length;
-        if (k >= len) k = k - len;
-        if (k == 0) return;
+        if (k >= len) {
+            k = k - len;
+        }
+        if (k == 0) {
+            return;
+        }
         int[] a = new int[k];
         for (int i = len - 1; i >= 0; i--) {
             if (len - i - 1 < k) {
@@ -2645,17 +2651,23 @@ public class LeetCodePart1 {
     public int countPrimes(int n) {
         int count = 0;
         for (int i = 1; i < n; i++) {
-            if (isPrime(i)) count++;
+            if (isPrime(i)) {
+                count++;
+            }
         }
         return count;
     }
 
     private boolean isPrime(int num) {
-        if (num <= 1) return false;
+        if (num <= 1) {
+            return false;
+        }
         // Loop's ending condition is i * i <= num instead of i <= sqrt(num)
         // to avoid repeatedly calling an expensive function sqrt().
         for (int i = 2; i * i <= num; i++) {
-            if (num % i == 0) return false;
+            if (num % i == 0) {
+                return false;
+            }
         }
         return true;
     }
