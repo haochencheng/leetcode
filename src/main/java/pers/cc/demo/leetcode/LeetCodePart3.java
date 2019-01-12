@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.val;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -888,7 +890,523 @@ public class LeetCodePart3 {
             return 0;
         }
         Arrays.sort(nums);
+
         return 0;
     }
+
+    /**
+     * 给定一个链表，判断链表中是否有环。
+     * <p>
+     * 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。
+     * <p>
+     * <p>
+     * <p>
+     * 示例 1：
+     * <p>
+     * 输入：head = [3,2,0,-4], pos = 1
+     * 输出：true
+     * 解释：链表中有一个环，其尾部连接到第二个节点。
+     * <p>
+     * <p>
+     * 示例 2：
+     * <p>
+     * 输入：head = [1,2], pos = 0
+     * 输出：true
+     * 解释：链表中有一个环，其尾部连接到第一个节点。
+     * <p>
+     * <p>
+     * 示例 3：
+     * <p>
+     * 输入：head = [1], pos = -1
+     * 输出：false
+     * 解释：链表中没有环。
+     * <p>
+     * 进阶：
+     *
+     * @param head
+     * @return
+     */
+    public boolean hasCycle(ListNode head) {
+        if (Objects.isNull(head) || Objects.isNull(head.next)) {
+            return false;
+        }
+        ListNode solow = head;
+        ListNode fast = head.next;
+        while (solow != fast) {
+            if (fast == null || fast.next == null) {
+                return false;
+            }
+            solow = solow.next;
+            fast = fast.next.next;
+        }
+        return true;
+    }
+
+    /**
+     * 我们想要使用一棵四叉树来储存一个 N x N 的布尔值网络。网络中每一格的值只会是真或假。树的根结点代表整个网络。对于每个结点, 它将被分等成四个孩子结点直到这个区域内的值都是相同的.
+     * <p>
+     * 每个结点还有另外两个布尔变量: isLeaf 和 val。isLeaf 当这个节点是一个叶子结点时为真。val 变量储存叶子结点所代表的区域的值。
+     * <p>
+     * 你的任务是使用一个四叉树表示给定的网络。下面的例子将有助于你理解这个问题：
+     * <p>
+     * 给定下面这个8 x 8 网络，我们将这样建立一个对应的四叉树：
+     * <p>
+     * <p>
+     * <p>
+     * 由上文的定义，它能被这样分割：
+     * <p>
+     * <p>
+     * 对应的四叉树应该像下面这样，每个结点由一对 (isLeaf, val) 所代表.
+     * <p>
+     * 对于非叶子结点，val 可以是任意的，所以使用 * 代替。
+     * <p>
+     * <p>
+     * <p>
+     * 提示：
+     * <p>
+     * N 将小于 1000 且确保是 2 的整次幂。
+     * 如果你想了解更多关于四叉树的知识，你可以参考这个 wiki 页面。
+     *
+     * @param grid
+     * @return
+     */
+    public Node construct(int[][] grid) {
+        return null;
+    }
+
+    /**
+     * 给定两个二叉树，编写一个函数来检验它们是否相同。
+     * <p>
+     * 如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的。
+     *
+     * @param p
+     * @param q
+     * @return
+     */
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (Objects.isNull(p) && Objects.isNull(q)) {
+            return true;
+        }
+        if (Objects.isNull(p) || Objects.isNull(q)) {
+            return false;
+        }
+        if (p.val != q.val) {
+            return false;
+        }
+        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+    }
+
+    /**
+     * 输入: 二叉树: [1,2,3,4]
+     * 1
+     * /   \
+     * 2     3
+     * /
+     * 4
+     * <p>
+     * 输出: "1(2(4))(3)"
+     * <p>
+     * 解释: 原本将是“1(2(4)())(3())”，
+     * 在你省略所有不必要的空括号对之后，
+     * 它将是“1(2(4))(3)”。
+     *
+     * @param t
+     * @return
+     */
+    public String tree2str(TreeNode t) {
+
+        return null;
+    }
+
+
+    /**
+     * 给定两个二叉树，想象当你将它们中的一个覆盖到另一个上时，两个二叉树的一些节点便会重叠。
+     * <p>
+     * 你需要将他们合并为一个新的二叉树。合并的规则是如果两个节点重叠，那么将他们的值相加作为节点合并后的新值，否则不为 NULL 的节点将直接作为新二叉树的节点。
+     *
+     * @param t1
+     * @param t2
+     * @return
+     */
+    public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+        if (null != t2 && null != t1) {
+            TreeNode node = new TreeNode(t1.val + t2.val);
+            node.left = mergeTrees(t1.left, t2.left);
+            node.right = mergeTrees(t1.right, t2.right);
+            return node;
+        } else {
+            return t1 == null ? t2 : t1;
+        }
+    }
+
+    @Test
+    public void averageOfLevels() {
+//        TreeNode treeNode = TreeNodeUtll.fillTreeNode(Arrays.asList(3, 9, 20, 15, 7));
+        TreeNode treeNode = TreeNodeUtll.fillTreeNode(Arrays.asList(3, 1, 5, 0, 2, 4, 6));
+        System.out.println(Arrays.deepToString(averageOfLevels(treeNode).toArray()));
+    }
+
+    /**
+     * 637. 二叉树的层平均值
+     * 给定一个非空二叉树, 返回一个由每层节点平均值组成的数组.
+     * <p>
+     * 示例 1:
+     * <p>
+     * 输入:
+     * 3
+     * / \
+     * 9  20
+     * /  \
+     * 15   7
+     * 输出: [3, 14.5, 11]
+     * 解释:
+     * 第0层的平均值是 3,  第1层是 14.5, 第2层是 11. 因此返回 [3, 14.5, 11].
+     * 注意：
+     * <p>
+     * 节点值的范围在32位有符号整数范围内。
+     *
+     * @param root
+     * @return
+     */
+    public List<Double> averageOfLevels(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        List<Double> list = new LinkedList<>();
+        list.add(Double.valueOf(root.val));
+        SortedMap<Integer, Pair<Integer, Integer>> integerIntegerMap = averageOfLevels(root, 1);
+        if (integerIntegerMap == null) {
+            return list;
+        }
+        Set<Map.Entry<Integer, Pair<Integer, Integer>>> entries = integerIntegerMap.entrySet();
+        for (Map.Entry<Integer, Pair<Integer, Integer>> entry : entries) {
+            Pair<Integer, Integer> value = entry.getValue();
+            list.add(BigDecimal.valueOf(value.getKey()).divide(BigDecimal.valueOf(value.getValue()), BigDecimal.ROUND_HALF_EVEN).doubleValue());
+        }
+        return list;
+    }
+
+    SortedMap<Integer, Pair<Integer, Integer>> integerIntegerMap = new TreeMap<>();
+
+    public SortedMap<Integer, Pair<Integer, Integer>> averageOfLevels(TreeNode root, int level) {
+        if (root == null) {
+            return null;
+        }
+        if (root.left == null && root.right == null) {
+            return null;
+        }
+        int t = 0;
+        int j = 0;
+        if (root.left != null) {
+            t += root.left.val;
+            System.out.println(root.left.val);
+            j++;
+        }
+        if (root.right != null) {
+            t += root.right.val;
+            System.out.println(root.right.val);
+            j++;
+        }
+        Pair<Integer, Integer> pair = integerIntegerMap.get(level);
+        if (pair == null) {
+            pair = new Pair<>(t, j);
+        } else {
+            pair.setKey(pair.getKey() + t);
+            pair.setValue(pair.getValue() + j);
+        }
+        integerIntegerMap.put(level, pair);
+        int nextLevel = level + 1;
+        averageOfLevels(root.left, nextLevel);
+        averageOfLevels(root.right, nextLevel);
+        return integerIntegerMap;
+    }
+
+
+    /**
+     * @param root
+     * @param val
+     * @return
+     */
+    public TreeNode searchBST(TreeNode root, int val) {
+        if (root == null) {
+            return null;
+        }
+        if (root.val == val) {
+            return root;
+        } else if (root.val > val) {
+            return searchBST(root.left, val);
+        } else if (root.val < val) {
+            return searchBST(root.right, val);
+        }
+        return null;
+    }
+
+
+    /**
+     * 669. 修剪二叉搜索树
+     * 给定一个二叉搜索树，同时给定最小边界L 和最大边界 R。通过修剪二叉搜索树，使得所有节点的值在[L, R]中 (R>=L) 。你可能需要改变树的根节点，所以结果应当返回修剪好的二叉搜索树的新的根节点。
+     * 示例 1:
+     * <p>
+     * 输入:
+     * 1
+     * / \
+     * 0   2
+     * <p>
+     * L = 1
+     * R = 2
+     * <p>
+     * 输出:
+     * 1
+     * \
+     * 2
+     * 示例 2:
+     * <p>
+     * 输入:
+     * 3
+     * / \
+     * 0   4
+     * \
+     * 2
+     * /
+     * 1
+     * <p>
+     * L = 1
+     * R = 3
+     * <p>
+     * 输出:
+     * 3
+     * /
+     * 2
+     * /
+     * 1
+     *
+     * @param root
+     * @param L
+     * @param R
+     * @return
+     */
+    public TreeNode trimBST(TreeNode root, int L, int R) {
+        if (root == null) {
+            return null;
+        }
+        if (root.val > R) {
+            return trimBST(root.left, L, R);
+        } else if (root.val < L) {
+            return trimBST(root.right, L, R);
+        } else {
+            root.left = trimBST(root.left, L, R);
+            root.right = trimBST(root.right, L, R);
+            return root;
+        }
+    }
+
+    /**
+     * 872. 叶子相似的树
+     * 请考虑一颗二叉树上所有的叶子，这些叶子的值按从左到右的顺序排列形成一个 叶值序列 。
+     * <p>
+     * <p>
+     * <p>
+     * 举个例子，如上图所示，给定一颗叶值序列为 (6, 7, 4, 9, 8) 的树。
+     * <p>
+     * 如果有两颗二叉树的叶值序列是相同，那么我们就认为它们是 叶相似 的。
+     * <p>
+     * 如果给定的两个头结点分别为 root1 和 root2 的树是叶相似的，则返回 true；否则返回 false 。
+     * <p>
+     * <p>
+     * <p>
+     * 提示：
+     * <p>
+     * 给定的两颗树可能会有 1 到 100 个结点。
+     *
+     * @param root1
+     * @param root2
+     * @return
+     */
+    public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+        if (root1 == null && root2 == null) {
+            return true;
+        }
+        if (root1 == null || root2 == null) {
+            return false;
+        }
+        List<Integer> list1 = leafSimilar(root1);
+        List<Integer> list2 = leafSimilar(root2);
+        if (list1.size() != list2.size()) return false;
+        for (int i = 0; i < list1.size(); i++) {
+            if (list1.get(i) != list2.get(i)) return false;
+        }
+        return true;
+    }
+
+    private List<Integer> leafSimilar(TreeNode root) {
+        List<Integer> list = new LinkedList<>();
+        dfs(root, list);
+        return list;
+    }
+
+    private void dfs(TreeNode root, List<Integer> list) {
+        if (root == null) {
+            return;
+        }
+        if (root.left == null && root.right == null) {
+            list.add(root.val);
+        }
+        dfs(root.left, list);
+        dfs(root.right, list);
+    }
+
+    /**
+     * 897. 递增顺序查找树
+     * 给定一个树，按中序遍历重新排列树，使树中最左边的结点现在是树的根，并且每个结点没有左子结点，只有一个右子结点。
+     * <p>
+     * <p>
+     * <p>
+     * 示例 ：
+     * <p>
+     * 输入：[5,3,6,2,4,null,8,1,null,null,null,7,9]
+     * <p>
+     * 5
+     * / \
+     * 3    6
+     * / \    \
+     * 2   4    8
+     * /        / \
+     * 1        7   9
+     * <p>
+     * 输出：[1,null,2,null,3,null,4,null,5,null,6,null,7,null,8,null,9]
+     * <p>
+     * 1
+     * \
+     * 2
+     * \
+     * 3
+     * \
+     * 4
+     * \
+     * 5
+     * \
+     * 6
+     * \
+     * 7
+     * \
+     * 8
+     * \
+     * 9
+     * <p>
+     * <p>
+     * 提示：
+     * <p>
+     * 给定树中的结点数介于 1 和 100 之间。
+     * 每个结点都有一个从 0 到 1000 范围内的唯一整数值。
+     *
+     * @param root
+     * @return
+     */
+    public TreeNode increasingBST(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        newRoot = new TreeNode(0);
+        dfsIncreasingBST(root);
+        return newRoot.right;
+    }
+
+    TreeNode newRoot;
+
+    private void dfsIncreasingBST(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        dfsIncreasingBST(root.left);
+        newRoot.right = new TreeNode(root.val);
+        newRoot = newRoot.right;
+        dfsIncreasingBST(root.right);
+    }
+
+    /**
+     * @param root
+     * @param k
+     * @return
+     */
+    public boolean findTarget(TreeNode root, int k) {
+        HashSet<Integer> set = new HashSet<>();
+        return dfs(root, set, k);
+    }
+
+    public boolean dfs(TreeNode root, HashSet<Integer> set, int k) {
+        if (root == null) {
+            return false;
+        }
+        if (set.contains(k - root.val)) {
+            return true;
+        }
+        set.add(root.val);
+        return dfs(root.left, set, k) || dfs(root.right, set, k);
+    }
+
+
+    @Test
+    public void findSecondMinimumValue() {
+        TreeNode treeNode = TreeNodeUtll.fillTreeNode(Arrays.asList(2, 2, 2));
+        System.out.println(findSecondMinimumValue(treeNode));
+    }
+
+    /**
+     * 671. 二叉树中第二小的节点
+     *
+     * @param root
+     * @return
+     */
+    public int findSecondMinimumValue(TreeNode root) {
+        if (root == null) {
+            return -1;
+        }
+        return dfsfindSecondMinimumValue(root, root.val);
+    }
+
+    public Integer dfsfindSecondMinimumValue(TreeNode root, Integer min) {
+        if (root == null) {
+            return -1;
+        }
+        if (root.val > min) {
+            return root.val;
+        }
+        Integer l = dfsfindSecondMinimumValue(root.left, min);
+        if (l != -1) {
+            return l;
+        }
+        Integer k = dfsfindSecondMinimumValue(root.right, min);
+        if (k != -1) {
+            return k;
+        }
+        return -1;
+    }
+
+    @Test
+    public void middleNode() {
+        ListNode treeNode = ListNode.fillNode(Arrays.asList(1, 2, 3, 4, 5,6));
+//        ListNode treeNode = ListNode.fillNode(Arrays.asList(1, 2, 3, 4, 5));
+//        ListNode treeNode = ListNode.fillNode(Arrays.asList(65,66,26,77,96,86,11,21,13,80));
+        System.out.println(middleNode(treeNode));
+    }
+
+    /**
+     * @param head
+     * @return
+     */
+    public ListNode middleNode(ListNode head) {
+        Map<Integer, ListNode> linkedHashMap = new LinkedHashMap();
+        int count=0;
+        while (head != null) {
+            linkedHashMap.put(count, head);
+            head = head.next;
+            count++;
+        }
+        int size = linkedHashMap.size();
+        int i = linkedHashMap.size() % 2;
+        int index=i==0?size/2:(size+1)/2-1;
+        return linkedHashMap.get(index);
+    }
+
 
 }
