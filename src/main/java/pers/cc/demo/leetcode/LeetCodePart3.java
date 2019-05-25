@@ -2019,7 +2019,7 @@ public class LeetCodePart3 {
         int[] ints = new int[]{1, 8, 6, 2, 5, 4, 8, 3, 7};
         int i = maxArea(ints);
         System.out.println(maxArea(ints));
-        Assert.assertTrue(i==49);
+        Assert.assertTrue(i == 49);
     }
 
     /**
@@ -2061,16 +2061,91 @@ public class LeetCodePart3 {
         int[] ints = new int[]{1, 15, 7, 9, 2, 5, 10};
         int i = maxSumAfterPartitioning(ints, 3);
         System.out.println(i);
-        Assert.assertTrue(i==84);
+        Assert.assertTrue(i == 84);
     }
 
     /**
      * 1024. 视频拼接
+     * 你将会获得一系列视频片段，这些片段来自于一项持续时长为 T 秒的体育赛事。这些片段可能有所重叠，也可能长度不一。
+     * <p>
+     * 视频片段 clips[i] 都用区间进行表示：开始于 clips[i][0] 并于 clips[i][1] 结束。我们甚至可以对这些片段自由地再剪辑，例如片段 [0, 7] 可以剪切成 [0, 1] + [1, 3] + [3, 7] 三部分。
+     * <p>
+     * 我们需要将这些片段进行再剪辑，并将剪辑后的内容拼接成覆盖整个运动过程的片段（[0, T]）。返回所需片段的最小数目，如果无法完成该任务，则返回 -1 。
+     * <p>
+     * 示例 1：
+     * <p>
+     * 输入：clips = [[0,2],[4,6],[8,10],[1,9],[1,5],[5,9]], T = 10
+     * 输出：3
+     * 解释：
+     * 我们选中 [0,2], [8,10], [1,9] 这三个片段。
+     * 然后，按下面的方案重制比赛片段：
+     * 将 [1,9] 再剪辑为 [1,2] + [2,8] + [8,9] 。
+     * 现在我们手上有 [0,2] + [2,8] + [8,10]，而这些涵盖了整场比赛 [0, 10]。
+     * 示例 2：
+     * <p>
+     * 输入：clips = [[0,1],[1,2]], T = 5
+     * 输出：-1
+     * 解释：
+     * 我们无法只用 [0,1] 和 [0,2] 覆盖 [0,5] 的整个过程。
+     *
      * @param clips
      * @param T
      * @return
      */
     public int videoStitching(int[][] clips, int T) {
-        return 0;
+        //DT
+//        int length = clips.length;
+//        int[] dp=new int[T+1];
+//        Arrays.fill(dp, T+1);
+//        dp[0]=0;
+//        for (int i = 0; i < T+1; i++) {
+//            for (int j = 0; j < length; j++) {
+//                int[] clip = clips[j];
+//                if (clip[0] <= i && clip[1] >= i) {
+//                    dp[i] = Math.min(dp[i], dp[clip[0]] + 1);
+//                }
+//            }
+//        }
+//        return dp[T]==T+1?-1:dp[T];
+
+        //优先集队列
+        Comparator<int[]> comparator = (o1, o2) -> {
+            if (o1[0] != o2[0]) {
+                return o1[0] - o2[0];
+            } else {
+                return o2[1] - o1[1];
+            }
+        };
+
+        PriorityQueue<int[]> p = new PriorityQueue<>(comparator);
+        for (int i = 0; i < clips.length; i++) {
+            p.add(clips[i]);
+        }
+        int ans = 0;
+        int cur;
+        int next = 0;
+        while (next < T && !p.isEmpty() && next >= p.peek()[0]) {
+            cur = next;
+            ans++;
+            while (!p.isEmpty() && p.peek()[0] <= cur) {
+                next = Math.max(next, p.poll()[1]);
+            }
+        }
+        if (next < T) {
+            return -1;
+        } else {
+            return ans;
+        }
+    }
+
+    @Test
+    public void videoStitching() {
+//        int[][] clips=new int[][]{{0,2},{4,6},{8,10},{1,9},{1,5},{5,9}};
+//        int i = videoStitching(clips, 10);
+//        Assert.assertTrue(i==10);
+        int[][] clips = new int[][]{{0, 2}, {1, 2}};
+        int i = videoStitching(clips, 3);
+//        Assert.assertTrue(i==-1);
+        System.out.println(i);
     }
 }
