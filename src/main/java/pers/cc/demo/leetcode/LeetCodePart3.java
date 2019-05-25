@@ -1384,7 +1384,7 @@ public class LeetCodePart3 {
 
     @Test
     public void middleNode() {
-        ListNode treeNode = ListNode.fillNode(Arrays.asList(1, 2, 3, 4, 5,6));
+        ListNode treeNode = ListNode.fillNode(Arrays.asList(1, 2, 3, 4, 5, 6));
 //        ListNode treeNode = ListNode.fillNode(Arrays.asList(1, 2, 3, 4, 5));
 //        ListNode treeNode = ListNode.fillNode(Arrays.asList(65,66,26,77,96,86,11,21,13,80));
         System.out.println(middleNode(treeNode));
@@ -1396,7 +1396,7 @@ public class LeetCodePart3 {
      */
     public ListNode middleNode(ListNode head) {
         Map<Integer, ListNode> linkedHashMap = new LinkedHashMap();
-        int count=0;
+        int count = 0;
         while (head != null) {
             linkedHashMap.put(count, head);
             head = head.next;
@@ -1404,9 +1404,574 @@ public class LeetCodePart3 {
         }
         int size = linkedHashMap.size();
         int i = linkedHashMap.size() % 2;
-        int index=i==0?size/2:(size+1)/2-1;
+        int index = i == 0 ? size / 2 : (size + 1) / 2 - 1;
         return linkedHashMap.get(index);
     }
 
+    /**
+     * 598. 范围求和 II
+     * 给定一个初始元素全部为 0，大小为 m*n 的矩阵 M 以及在 M 上的一系列更新操作。
+     * <p>
+     * 操作用二维数组表示，其中的每个操作用一个含有两个正整数 a 和 b 的数组表示，含义是将所有符合 0 <= i < a 以及 0 <= j < b 的元素 M[i][j] 的值都增加 1。
+     * <p>
+     * 在执行给定的一系列操作后，你需要返回矩阵中含有最大整数的元素个数。
+     * <p>
+     * 示例 1:
+     * <p>
+     * 输入:
+     * m = 3, n = 3
+     * operations = [[2,2],[3,3]]
+     * 输出: 4
+     * 解释:
+     * 初始状态, M =
+     * [[0, 0, 0],
+     * [0, 0, 0],
+     * [0, 0, 0]]
+     * <p>
+     * 执行完操作 [2,2] 后, M =
+     * [[1, 1, 0],
+     * [1, 1, 0],
+     * [0, 0, 0]]
+     * <p>
+     * 执行完操作 [3,3] 后, M =
+     * [[2, 2, 1],
+     * [2, 2, 1],
+     * [1, 1, 1]]
+     * <p>
+     * M 中最大的整数是 2, 而且 M 中有4个值为2的元素。因此返回 4。
+     * 注意:
+     * <p>
+     * m 和 n 的范围是 [1,40000]。
+     * a 的范围是 [1,m]，b 的范围是 [1,n]。
+     * 操作数目不超过 10000
+     *
+     * @param m
+     * @param n
+     * @param ops
+     * @return
+     */
+    public int maxCount(int m, int n, int[][] ops) {
+        for (int[] ints : ops) {
+            if (ints[0] < m) {
+                m = ints[0];
+            }
+            if (ints[1] < n) {
+                n = ints[1];
+            }
+        }
+        return m * n;
+    }
+
+
+    /**
+     * 给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次。
+     * <p>
+     * 示例 1:
+     * <p>
+     * 输入: 1->1->2
+     * 输出: 1->2
+     * 示例 2:
+     * <p>
+     * 输入: 1->1->2->3->3
+     * 输出: 1->2->3
+     *
+     * @param head
+     * @return
+     */
+    public ListNode deleteDuplicates(ListNode head) {
+        if (null == head) {
+            return null;
+        }
+        HashMap hashMap = new HashMap();
+        ListNode r = head;
+        ListNode pre = null;
+        while (head != null) {
+            int val = head.val;
+            if (hashMap.get(val) != null) {
+                pre.next = head.next;
+            } else {
+                pre = head;
+                hashMap.put(val, 1);
+            }
+            head = head.next;
+        }
+        return r;
+    }
+
+    class Employee {
+        // It's the unique id of each node;
+        // unique id of this employee
+        public int id;
+        // the importance value of this employee
+        public int importance;
+        // the id of direct subordinates
+        public List<Integer> subordinates;
+    }
+
+    ;
+
+    /**
+     * 给定一个保存员工信息的数据结构，它包含了员工唯一的id，重要度 和 直系下属的id。
+     * <p>
+     * 比如，员工1是员工2的领导，员工2是员工3的领导。他们相应的重要度为15, 10, 5。那么员工1的数据结构是[1, 15, [2]]，员工2的数据结构是[2, 10, [3]]，员工3的数据结构是[3, 5, []]。注意虽然员工3也是员工1的一个下属，但是由于并不是直系下属，因此没有体现在员工1的数据结构中。
+     * <p>
+     * 现在输入一个公司的所有员工信息，以及单个员工id，返回这个员工和他所有下属的重要度之和。
+     * <p>
+     * 示例 1:
+     * <p>
+     * 输入: [[1, 5, [2, 3]], [2, 3, []], [3, 3, []]], 1
+     * 输出: 11
+     * 解释:
+     * 员工1自身的重要度是5，他有两个直系下属2和3，而且2和3的重要度均为3。因此员工1的总重要度是 5 + 3 + 3 = 11。
+     * 注意:
+     * <p>
+     * 一个员工最多有一个直系领导，但是可以有多个直系下属
+     * 员工数量不超过2000。
+     *
+     * @param employees
+     * @param id
+     * @return
+     */
+    public int getImportance(List<Employee> employees, int id) {
+        Map<Integer, Employee> employeeMap = new HashMap<>();
+        for (int i = 0; i < employees.size(); ++i) {
+            employeeMap.put(employees.get(i).id, employees.get(i));
+        }
+        return dfsGetImportance(employeeMap, id);
+    }
+
+    public int dfsGetImportance(Map<Integer, Employee> hm, int id) {
+        List<Integer> subordinates = hm.get(id).subordinates;
+        int res = hm.get(id).importance;
+        if (subordinates.size() == 0) {//递归跳出
+            return res;
+        }
+        for (int i = 0; i < subordinates.size(); ++i) {
+            res += dfsGetImportance(hm, subordinates.get(i));
+        }
+        return res;
+    }
+
+    /**
+     * 给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。
+     * <p>
+     * <p>
+     * 示例 1:
+     * <p>
+     * 输入: nums = [-1,0,3,5,9,12], target = 9
+     * 输出: 4
+     * 解释: 9 出现在 nums 中并且下标为 4
+     * 示例 2:
+     * <p>
+     * 输入: nums = [-1,0,3,5,9,12], target = 2
+     * 输出: -1
+     * 解释: 2 不存在 nums 中因此返回 -1
+     * <p>
+     * <p>
+     * 提示：
+     * <p>
+     * 你可以假设 nums 中的所有元素是不重复的。
+     * n 将在 [1, 10000]之间。
+     * nums 的每个元素都将在 [-9999, 9999]之间。
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int search(int[] nums, int target) {
+        int result = -1;
+        int start = 0, end = nums.length;
+        while (start <= end) {
+            //防止溢位
+            int mid = start + ((end - start) / 2);
+            int hv = nums[mid];
+            if (hv > target) {
+                end = mid - 1;
+            } else if (hv < target) {
+                start = mid + 1;
+            } else {
+                result = mid + 1;
+                break;
+            }
+        }
+        return result;
+    }
+
+    @Test
+    public void search() {
+        int[] ints = new int[]{-1, 0, 3, 5, 9, 12};
+        System.out.println(search(ints, 2));
+    }
+
+    /**
+     * 给定一个二叉搜索树的根结点 root, 返回树中任意两节点的差的最小值。
+     * <p>
+     * 示例：
+     * <p>
+     * 输入: root = [4,2,6,1,3,null,null]
+     * 输出: 1
+     * 解释:
+     * 注意，root是树结点对象(TreeNode object)，而不是数组。
+     * <p>
+     * 给定的树 [4,2,6,1,3,null,null] 可表示为下图:
+     * <p>
+     * 4
+     * /   \
+     * 2      6
+     * / \
+     * 1   3
+     * <p>
+     * 最小的差值是 1, 它是节点1和节点2的差值, 也是节点3和节点2的差值。
+     * 注意：
+     * <p>
+     * 二叉树的大小范围在 2 到 100。
+     * 二叉树总是有效的，每个节点的值都是整数，且不重复。
+     *
+     * @param root
+     * @return
+     */
+    public int minDiffInBST(TreeNode root) {
+        dfsMinDiffInBST(root);
+        return min;
+    }
+
+    private int min = Integer.MAX_VALUE;
+    private TreeNode preNode;
+
+    public void dfsMinDiffInBST(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        dfsMinDiffInBST(root.left);
+        int val = root.val;
+        if (preNode != null) {
+            min = Math.min(Math.abs(val - preNode.val), min);
+        }
+        preNode = root;
+        dfsMinDiffInBST(root.right);
+    }
+
+    /**
+     * 766. 托普利茨矩阵
+     * <p>
+     * 如果一个矩阵的每一方向由左上到右下的对角线上具有相同元素，那么这个矩阵是托普利茨矩阵。
+     * <p>
+     * 给定一个 M x N 的矩阵，当且仅当它是托普利茨矩阵时返回 True。
+     * <p>
+     * 示例 1:
+     * <p>
+     * 输入:
+     * matrix = [
+     * [1,2,3,4],
+     * [5,1,2,3],
+     * [9,5,1,2]
+     * ]
+     * 输出: True
+     * 解释:
+     * 在上述矩阵中, 其对角线为:
+     * "[9]", "[5, 5]", "[1, 1, 1]", "[2, 2, 2]", "[3, 3]", "[4]"。
+     * 各条对角线上的所有元素均相同, 因此答案是True。
+     * <p>
+     * 示例 2:
+     * <p>
+     * 输入:
+     * matrix = [
+     * [1,2],
+     * [2,2]
+     * ]
+     * 输出: False
+     * 解释:
+     * 对角线"[1, 2]"上的元素不同。
+     * 说明:
+     * <p>
+     * matrix 是一个包含整数的二维数组。
+     * matrix 的行数和列数均在 [1, 20]范围内。
+     * matrix[i][j] 包含的整数在 [0, 99]范围内。
+     * 进阶:
+     * <p>
+     * 如果矩阵存储在磁盘上，并且磁盘内存是有限的，因此一次最多只能将一行矩阵加载到内存中，该怎么办？
+     * 如果矩阵太大以至于只能一次将部分行加载到内存中，该怎么办？
+     *
+     * @param matrix
+     * @return
+     */
+    public boolean isToeplitzMatrix(int[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * 682. 棒球比赛
+     * 你现在是棒球比赛记录员。
+     * 给定一个字符串列表，每个字符串可以是以下四种类型之一：
+     * 1.整数（一轮的得分）：直接表示您在本轮中获得的积分数。
+     * 2. "+"（一轮的得分）：表示本轮获得的得分是前两轮有效 回合得分的总和。
+     * 3. "D"（一轮的得分）：表示本轮获得的得分是前一轮有效 回合得分的两倍。
+     * 4. "C"（一个操作，这不是一个回合的分数）：表示您获得的最后一个有效 回合的分数是无效的，应该被移除。
+     * <p>
+     * 每一轮的操作都是永久性的，可能会对前一轮和后一轮产生影响。
+     * 你需要返回你在所有回合中得分的总和。
+     * <p>
+     * 示例 1:
+     * <p>
+     * 输入: ["5","2","C","D","+"]
+     * 输出: 30
+     * 解释:
+     * 第1轮：你可以得到5分。总和是：5。
+     * 第2轮：你可以得到2分。总和是：7。
+     * 操作1：第2轮的数据无效。总和是：5。
+     * 第3轮：你可以得到10分（第2轮的数据已被删除）。总数是：15。
+     * 第4轮：你可以得到5 + 10 = 15分。总数是：30。
+     * 示例 2:
+     * <p>
+     * 输入: ["5","-2","4","C","D","9","+","+"]
+     * 输出: 27
+     * 解释:
+     * 第1轮：你可以得到5分。总和是：5。
+     * 第2轮：你可以得到-2分。总数是：3。
+     * 第3轮：你可以得到4分。总和是：7。
+     * 操作1：第3轮的数据无效。总数是：3。
+     * 第4轮：你可以得到-4分（第三轮的数据已被删除）。总和是：-1。
+     * 第5轮：你可以得到9分。总数是：8。
+     * 第6轮：你可以得到-4 + 9 = 5分。总数是13。
+     * 第7轮：你可以得到9 + 5 = 14分。总数是27。
+     * 注意：
+     * <p>
+     * 输入列表的大小将介于1和1000之间。
+     * 列表中的每个整数都将介于-30000和30000之间。
+     *
+     * @param ops
+     * @return
+     */
+    public int calPoints(String[] ops) {
+        Stack<Integer> stack = new Stack<>();
+        int i;
+        for (String o : ops) {
+            if ("+".equals(o)) {
+                int size = stack.size();
+                i = stack.get(size - 1) + stack.get(size - 2);
+                stack.add(i);
+            } else if ("C".equals(o)) {
+                if (!stack.isEmpty()) {
+                    stack.pop();
+                }
+            } else if ("D".equals(o)) {
+                i = stack.peek() * 2;
+                stack.add(i);
+            } else {
+                stack.add(Integer.valueOf(o));
+            }
+        }
+        int res = 0;
+        while (!stack.isEmpty()) {
+            res += stack.pop();
+        }
+        return res;
+    }
+
+    @Test
+    public void calPoints() {
+        System.out.println(calPoints(new String[]{"5", "2", "C", "D", "+"}));
+//        System.out.println(calPoints(new String[]{"5","-2","4","C","D","9","+","+"}));
+    }
+
+
+    public boolean backspaceCompare(String S, String T) {
+        Stack<Character> s = new Stack<Character>();
+        Stack<Character> t = new Stack<Character>();
+
+        for (int i = 0; i < S.length(); i++) {
+            if (S.charAt(i) != '#') {
+                s.push(S.charAt(i));
+            } else {
+                if (s.isEmpty()) {
+                    continue;
+                } else {
+                    s.pop();
+                }
+            }
+        }
+        for (int i = 0; i < T.length(); i++) {
+            if (T.charAt(i) != '#') {
+                t.push(T.charAt(i));
+            } else {
+                if (!t.isEmpty()) {
+                    t.pop();
+                } else {
+                    continue;
+                }
+            }
+        }
+        return s.equals(t);
+    }
+
+
+    /**
+     * 811. 子域名访问计数
+     * 一个网站域名，如"discuss.leetcode.com"，包含了多个子域名。作为顶级域名，常用的有"com"，下一级则有"leetcode.com"，最低的一级为"discuss.leetcode.com"。当我们访问域名"discuss.leetcode.com"时，也同时访问了其父域名"leetcode.com"以及顶级域名 "com"。
+     * <p>
+     * 给定一个带访问次数和域名的组合，要求分别计算每个域名被访问的次数。其格式为访问次数+空格+地址，例如："9001 discuss.leetcode.com"。
+     * <p>
+     * 接下来会给出一组访问次数和域名组合的列表cpdomains 。要求解析出所有域名的访问次数，输出格式和输入格式相同，不限定先后顺序。
+     * <p>
+     * 示例 1:
+     * 输入:
+     * ["9001 discuss.leetcode.com"]
+     * 输出:
+     * ["9001 discuss.leetcode.com", "9001 leetcode.com", "9001 com"]
+     * 说明:
+     * 例子中仅包含一个网站域名："discuss.leetcode.com"。按照前文假设，子域名"leetcode.com"和"com"都会被访问，所以它们都被访问了9001次。
+     * 示例 2
+     * 输入:
+     * ["900 google.mail.com", "50 yahoo.com", "1 intel.mail.com", "5 wiki.org"]
+     * 输出:
+     * ["901 mail.com","50 yahoo.com","900 google.mail.com","5 wiki.org","5 org","1 intel.mail.com","951 com"]
+     * 说明:
+     * 按照假设，会访问"google.mail.com" 900次，"yahoo.com" 50次，"intel.mail.com" 1次，"wiki.org" 5次。
+     * 而对于父域名，会访问"mail.com" 900+1 = 901次，"com" 900 + 50 + 1 = 951次，和 "org" 5 次。
+     * 注意事项：
+     * <p>
+     * cpdomains 的长度小于 100。
+     * 每个域名的长度小于100。
+     * 每个域名地址包含一个或两个"."符号。
+     * 输入中任意一个域名的访问次数都小于10000
+     *
+     * @param cpdomains
+     * @return
+     */
+    public List<String> subdomainVisits(String[] cpdomains) {
+        List<String> list = new ArrayList<>();
+        Map<String, Integer> map = new HashMap<>();
+        for (String domain : cpdomains) {
+            String[] s = domain.split(" ");
+            String s1 = s[1];
+            boolean hasNext = s1.contains(".");
+            String substring = s1;
+            while (hasNext) {
+                hasNext = substring.contains(".");
+                Integer integer = map.get(s1);
+                if (integer == null) {
+                    map.put(s1, Integer.valueOf(s[0]));
+                } else {
+                    map.put(s1, integer + Integer.valueOf(s[0]));
+                }
+                substring = s1.substring(s1.indexOf("."));
+            }
+        }
+        Set<Map.Entry<String, Integer>> entries = map.entrySet();
+        for (Map.Entry entry : entries) {
+            StringBuilder sb = new StringBuilder(entry.getValue() + " ");
+            sb.append(entry.getKey());
+            list.add(sb.toString());
+        }
+        return list;
+    }
+
+    /**
+     * 965. 单值二叉树
+     * <p>
+     * 如果二叉树每个节点都具有相同的值，那么该二叉树就是单值二叉树。
+     * <p>
+     * 只有给定的树是单值二叉树时，才返回 true；否则返回 false。
+     * <p>
+     * <p>
+     * <p>
+     * 示例 1：
+     * <p>
+     * <p>
+     * <p>
+     * 输入：[1,1,1,1,1,null,1]
+     * 输出：true
+     * 示例 2：
+     * <p>
+     * <p>
+     * <p>
+     * 输入：[2,2,2,5,2]
+     * 输出：false
+     * <p>
+     * <p>
+     * 提示：
+     * <p>
+     * 给定树的节点数范围是 [1, 100]。
+     * 每个节点的值都是整数，范围为 [0, 99] 。
+     *
+     * @param root
+     * @return
+     */
+    public boolean isUnivalTree(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        return isUnivalTree(root, root.val);
+    }
+
+    public boolean isUnivalTree(TreeNode root, Integer val) {
+        if (root == null) {
+            return true;
+        }
+        if (root.val != val) {
+            return false;
+        }
+        return isUnivalTree(root.left, val) && isUnivalTree(root.right, val);
+    }
+
+
+    /**
+     * 69. x 的平方根
+     * 实现 int sqrt(int x) 函数。
+     * <p>
+     * 计算并返回 x 的平方根，其中 x 是非负整数。
+     * <p>
+     * 由于返回类型是整数，结果只保留整数的部分，小数部分将被舍去。
+     * <p>
+     * 示例 1:
+     * <p>
+     * 输入: 4
+     * 输出: 2
+     * 示例 2:
+     * <p>
+     * 输入: 8
+     * 输出: 2
+     * 说明: 8 的平方根是 2.82842...,
+     * 由于返回类型是整数，小数部分将被舍去。
+     *
+     * @param x
+     * @return
+     */
+    public int mySqrt(int x) {
+        //二分查找法
+        if(x==0||x==1){
+            return x;
+        }
+        long l = 0;
+        long r = x;
+        while (l <= r) {
+            long mid = (l + r) / 2;
+            long i = mid * mid;
+            if (i > x) {
+                r = mid - 1;
+            } else if (i < x) {
+                l = mid + 1;
+            } else {
+                return (int)mid;
+            }
+        }
+        if (l * l < x) {
+            return (int)l;
+        } else {
+            return (int)l - 1;
+        }
+    }
+
+    @Test
+    public void mySqrt(){
+        System.out.println(mySqrt(4));
+//        System.out.println(mySqrt(8));
+    }
 
 }
