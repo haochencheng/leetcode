@@ -3,6 +3,7 @@ package pers.cc.demo.leetcode;
 import lombok.Builder;
 import lombok.Data;
 import lombok.val;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -1945,7 +1946,7 @@ public class LeetCodePart3 {
      */
     public int mySqrt(int x) {
         //二分查找法
-        if(x==0||x==1){
+        if (x == 0 || x == 1) {
             return x;
         }
         long l = 0;
@@ -1958,20 +1959,118 @@ public class LeetCodePart3 {
             } else if (i < x) {
                 l = mid + 1;
             } else {
-                return (int)mid;
+                return (int) mid;
             }
         }
         if (l * l < x) {
-            return (int)l;
+            return (int) l;
         } else {
-            return (int)l - 1;
+            return (int) l - 1;
         }
     }
 
     @Test
-    public void mySqrt(){
+    public void mySqrt() {
         System.out.println(mySqrt(4));
 //        System.out.println(mySqrt(8));
     }
 
+    /**
+     * 11. 盛最多水的容器
+     * 给定 n 个非负整数 a1，a2，...，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。
+     * <p>
+     * 说明：你不能倾斜容器，且 n 的值至少为 2。
+     * <p>
+     * 图中垂直线代表输入数组 [1,8,6,2,5,4,8,3,7]。在此情况下，容器能够容纳水（表示为蓝色部分）的最大值为 49。
+     * <p>
+     * 示例:
+     * <p>
+     * 输入: [1,8,6,2,5,4,8,3,7]
+     * 输出: 49
+     *
+     * @param height
+     * @return
+     */
+
+    public int maxArea(int[] height) {
+        //  暴力O(n^2)
+//        int s=0;
+//        int x;
+//        int length = height.length;
+//        for (int i=0; i<length;i++){
+//            for (int j=i+1;j<length;j++){
+//                x=j-i;
+//                int tmp=x*(height[i]>height[j]?height[j]:height[i]);
+//                s=tmp>s?tmp:s;
+//            }
+//        }
+//        return s;
+        // 指针 O(n)
+        int max = 0;
+        for (int i = 0, j = height.length - 1; i < j; ) {
+            int minHeight = height[i] < height[j] ? height[i++] : height[j--];
+            max = Math.max(max, (j - i + 1) * minHeight);
+        }
+        return max;
+    }
+
+    @Test
+    public void maxArea() {
+        int[] ints = new int[]{1, 8, 6, 2, 5, 4, 8, 3, 7};
+        int i = maxArea(ints);
+        System.out.println(maxArea(ints));
+        Assert.assertTrue(i==49);
+    }
+
+    /**
+     * 1043. 分隔数组以得到最大和
+     * 给出整数数组 A，将该数组分隔为长度最多为 K 的几个（连续）子数组。分隔完成后，每个子数组的中的值都会变为该子数组中的最大值。
+     * <p>
+     * 返回给定数组完成分隔后的最大和。
+     * <p>
+     * 示例：
+     * <p>
+     * 输入：A = [1,15,7,9,2,5,10], K = 3
+     * 输出：84
+     * 解释：A 变为 [15,15,15,9,10,10,10]
+     * <p>
+     * 提示：
+     * <p>
+     * 1 <= K <= A.length <= 500
+     * 0 <= A[i] <= 10^6
+     *
+     * @param A
+     * @param K
+     * @return
+     */
+    public int maxSumAfterPartitioning(int[] A, int K) {
+        int l = A.length;
+        int[] res = new int[l];
+        for (int i = 0; i < l; i++) {
+            int max = A[i];
+            for (int j = 1; j <= K && i - j + 1 >= 0; j++) {
+                max = Math.max(max, A[i - j + 1]);
+                res[i] = Math.max(res[i], (i - j < 0 ? 0 : res[i - j]) + j * max);
+            }
+        }
+        return res[l - 1];
+    }
+
+    @Test
+    public void maxSumAfterPartitioning() {
+        int[] ints = new int[]{1, 15, 7, 9, 2, 5, 10};
+        int i = maxSumAfterPartitioning(ints, 3);
+        System.out.println(i);
+        Assert.assertTrue(i==84);
+    }
+
+    /**
+     * 1024. 视频拼接
+     * @param clips
+     * @param T
+     * @return
+     */
+    public int videoStitching(int[][] clips, int T) {
+        return 0;
+    }
 }
