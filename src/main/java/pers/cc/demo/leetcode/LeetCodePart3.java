@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -2147,5 +2148,272 @@ public class LeetCodePart3 {
         int i = videoStitching(clips, 3);
 //        Assert.assertTrue(i==-1);
         System.out.println(i);
+    }
+
+    /**
+     * 980. 不同路径 III
+     * 在二维网格 grid 上，有 4 种类型的方格：
+     * <p>
+     * 1 表示起始方格。且只有一个起始方格。
+     * 2 表示结束方格，且只有一个结束方格。
+     * 0 表示我们可以走过的空方格。
+     * -1 表示我们无法跨越的障碍。
+     * 返回在四个方向（上、下、左、右）上行走时，从起始方格到结束方格的不同路径的数目，每一个无障碍方格都要通过一次。
+     * <p>
+     * <p>
+     * <p>
+     * 示例 1：
+     * <p>
+     * 输入：[[1,0,0,0],[0,0,0,0],[0,0,2,-1]]
+     * 输出：2
+     * 解释：我们有以下两条路径：
+     * 1. (0,0),(0,1),(0,2),(0,3),(1,3),(1,2),(1,1),(1,0),(2,0),(2,1),(2,2)
+     * 2. (0,0),(1,0),(2,0),(2,1),(1,1),(0,1),(0,2),(0,3),(1,3),(1,2),(2,2)
+     * 示例 2：
+     * <p>
+     * 输入：[[1,0,0,0],[0,0,0,0],[0,0,0,2]]
+     * 输出：4
+     * 解释：我们有以下四条路径：
+     * 1. (0,0),(0,1),(0,2),(0,3),(1,3),(1,2),(1,1),(1,0),(2,0),(2,1),(2,2),(2,3)
+     * 2. (0,0),(0,1),(1,1),(1,0),(2,0),(2,1),(2,2),(1,2),(0,2),(0,3),(1,3),(2,3)
+     * 3. (0,0),(1,0),(2,0),(2,1),(2,2),(1,2),(1,1),(0,1),(0,2),(0,3),(1,3),(2,3)
+     * 4. (0,0),(1,0),(2,0),(2,1),(1,1),(0,1),(0,2),(0,3),(1,3),(1,2),(2,2),(2,3)
+     * 示例 3：
+     * <p>
+     * 输入：[[0,1],[2,0]]
+     * 输出：0
+     * 解释：
+     * 没有一条路能完全穿过每一个空的方格一次。
+     * 请注意，起始和结束方格可以位于网格中的任意位置。
+     * <p>
+     * <p>
+     * 提示：
+     * <p>
+     * 1 <= grid.length * grid[0].length <= 20
+     *
+     * @param grid
+     * @return
+     */
+    public int uniquePathsIII(int[][] grid) {
+        int n = 1;
+        int sx = 0;
+        int sy = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == 0) {
+                    n++;
+                } else if (grid[i][j] == 1) {
+                    sx = i;
+                    sy = j;
+                }
+            }
+        }
+        return dfsUniquePathsIII(grid, sx, sy, n);
+    }
+
+    private int dfsUniquePathsIII(int[][] grid, int x, int y, int n) {
+        if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length || grid[x][y] == -1) {
+            return 0;
+        }
+        if (grid[x][y] == 2) {
+            return n == 0 ? 1 : 0;
+        }
+        grid[x][y] = -1;
+        int paths = dfsUniquePathsIII(grid, x + 1, y, n - 1) +
+                dfsUniquePathsIII(grid, x - 1, y, n - 1) +
+                dfsUniquePathsIII(grid, x, y + 1, n - 1) +
+                dfsUniquePathsIII(grid, x, y - 1, n - 1);
+        grid[x][y] = 0;
+        return paths;
+    }
+
+    @Test
+    public void uniquePathsIII() {
+        int[][] grid = new int[][]{{1, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 2, -1}};
+        System.out.println(uniquePathsIII(grid));
+    }
+
+    /**
+     * 799. 香槟塔
+     * 我们把玻璃杯摆成金字塔的形状，其中第一层有1个玻璃杯，第二层有2个，依次类推到第100层，每个玻璃杯(250ml)将盛有香槟。
+     * <p>
+     * 从顶层的第一个玻璃杯开始倾倒一些香槟，当顶层的杯子满了，任何溢出的香槟都会立刻等流量的流向左右两侧的玻璃杯。当左右两边的杯子也满了，就会等流量的流向它们左右两边的杯子，依次类推。（当最底层的玻璃杯满了，香槟会流到地板上）
+     * <p>
+     * 例如，在倾倒一杯香槟后，最顶层的玻璃杯满了。倾倒了两杯香槟后，第二层的两个玻璃杯各自盛放一半的香槟。在倒三杯香槟后，第二层的香槟满了 - 此时总共有三个满的玻璃杯。在倒第四杯后，第三层中间的玻璃杯盛放了一半的香槟，他两边的玻璃杯各自盛放了四分之一的香槟，如下图所示。
+     * <p>
+     * 现在当倾倒了非负整数杯香槟后，返回第 i 行 j 个玻璃杯所盛放的香槟占玻璃杯容积的比例（i 和 j都从0开始）。
+     * 示例 1:
+     * 输入: poured(倾倒香槟总杯数) = 1, query_glass(杯子的位置数) = 1, query_row(行数) = 1
+     * 输出: 0.0
+     * 解释: 我们在顶层（下标是（0，0））倒了一杯香槟后，没有溢出，因此所有在顶层以下的玻璃杯都是空的。
+     * <p>
+     * 示例 2:
+     * 输入: poured(倾倒香槟总杯数) = 2, query_glass(杯子的位置数) = 1, query_row(行数) = 1
+     * 输出: 0.5
+     * 解释: 我们在顶层（下标是（0，0）倒了两杯香槟后，有一杯量的香槟将从顶层溢出，位于（1，0）的玻璃杯和（1，1）的玻璃杯平分了这一杯香槟，所以每个玻璃杯有一半的香槟。
+     * 注意:
+     * <p>
+     * poured 的范围[0, 10 ^ 9]。
+     * query_glass 和query_row 的范围 [0, 99]。
+     *
+     * @param poured
+     * @param query_row
+     * @param query_glass
+     * @return
+     */
+    public double champagneTower(int poured, int query_row, int query_glass) {
+        //push 从上到下
+        double[][] dp = new double[query_row + 1][query_row + 1];
+        dp[0][0] = poured;
+        for (int i = 0; i < query_row; i++) {
+            for (int j = 0; j < query_row; j++) {
+                double count = dp[i][j] - 1;
+                if (count > 0) {
+                    dp[i + 1][j] += count / 2;
+                    dp[i + 1][j + 1] += count / 2;
+                }
+            }
+        }
+        return Math.min(1.0, dp[query_row][query_glass]);
+    }
+//    public double champagneTower(int poured, int query_row, int query_glass) {
+//        // 抖机灵 用数学的方法 不能判断 子节点。
+//        if (poured==0){
+//            return 0;
+//        }
+//        if (query_row==0&&poured>0){
+//            return 1;
+//        }
+//        int[] preChampagneTower = getPreChampagneTower(poured);
+//        if (query_row  < preChampagneTower[0]){
+//            return 1;
+//        }else if(query_row  >preChampagneTower[0]){
+//            return 0;
+//        }else{
+//            BigDecimal per=BigDecimal.valueOf(poured-preChampagneTower[1]).divide(BigDecimal.valueOf(query_row*2), MathContext.DECIMAL128);
+//            if (poured<=3){
+//                return per.doubleValue();
+//            }
+//            //首尾
+//            if (query_glass==1||query_glass==query_row+1){
+//                double v = per.multiply(BigDecimal.valueOf(2)).doubleValue();
+//                return v>1?1:v;
+//            }else {
+//                return per.doubleValue();
+//            }
+//        }
+//    }
+//
+//    private int[] getPreChampagneTower(int poured){
+//        int sum=0;
+//        int[] ints=new int[2];
+//        for (int i = 1; i < 50; i++) {
+//            sum+=i;
+//            if (sum>=poured){
+//                ints[0]=i-1;
+//                ints[1]=sum-i;
+//                return ints;
+//            }
+//        }
+//        return ints;
+//    }
+
+    @Test
+    public void champagneTower() {
+//        System.out.println(champagneTower(1,1,1));
+        //0.5
+        System.out.println(champagneTower(2, 1, 1));
+//        System.out.println(champagneTower(4,2,0)); 0.25
+//        System.out.println(champagneTower(4,2,1)); 0.5
+//        System.out.println(champagneTower(6,2,1));
+    }
+
+    /**
+     * 304. 二维区域和检索 - 矩阵不可变
+     * 给定一个二维矩阵，计算其子矩形范围内元素的总和，该子矩阵的左上角为 (row1, col1) ，右下角为 (row2, col2)。
+     * <p>
+     * Range Sum Query 2D
+     * 上图子矩阵左上角 (row1, col1) = (2, 1) ，右下角(row2, col2) = (4, 3)，该子矩形内元素的总和为 8。
+     * <p>
+     * 示例:
+     * <p>
+     * 给定 matrix = [
+     * [3, 0, 1, 4, 2],
+     * [5, 6, 3, 2, 1],
+     * [1, 2, 0, 1, 5],
+     * [4, 1, 0, 1, 7],
+     * [1, 0, 3, 0, 5]
+     * ]
+     * <p>
+     * sumRegion(2, 1, 4, 3) -> 8
+     * sumRegion(1, 1, 2, 2) -> 11
+     * sumRegion(1, 2, 2, 4) -> 12
+     * 说明:
+     * <p>
+     * 你可以假设矩阵不可变。
+     * 会多次调用 sumRegion 方法。
+     * 你可以假设 row1 ≤ row2 且 col1 ≤ col2。
+     */
+    static class NumMatrix {
+        int[][] dp;
+        public NumMatrix(int[][] matrix) {
+            if (matrix != null && matrix.length != 0) {
+                int x = matrix.length;
+                int y = matrix[0].length;
+                dp = new int[x + 1][y + 1];
+                for (int i = 0; i < x; i++) {
+                    int sum = 0;
+                    for (int j = 0; j < y; j++) {
+                        sum += matrix[i][j];
+                        dp[i+1][j+1] = i > 0?dp[i][j+1] + sum:sum;
+                    }
+                }
+            }
+        }
+        public int sumRegion(int row1, int col1, int row2, int col2) {
+            return dp[row2+1][col2+1] - dp[row1][col2+1] - dp[row2+1][col1 ] + dp[row1 ][col1];
+        }
+
+        public static void main(String[] args) {
+            int[][] matrix = new int[][]{
+                    {3, 0, 1, 4, 2},
+                    {5, 6, 3, 2, 1},
+                    {1, 2, 0, 1, 5},
+                    {4, 1, 0, 1, 7},
+                    {1, 0, 3, 0, 5}
+            };
+            NumMatrix numMatrix = new NumMatrix(matrix);
+            System.out.println(numMatrix.sumRegion(2, 1, 4, 3));
+        }
+    }
+
+    static class MaximalSquare {
+
+        public int maximalSquare(char[][] matrix) {
+            int ans=0;
+            if (matrix==null || matrix.length==0){
+                return ans;
+            }
+            char[][] dp=new char[matrix.length][matrix[0].length];
+            for (int i = 1; i < matrix.length; i++) {
+                for (int j = 1; j < matrix[0].length; j++) {
+
+                }
+            }
+            return ans;
+        }
+
+        public static void main(String[] args) {
+            char[][] matrix = new char[][]{
+                    {1, 0, 1, 0, 0},
+                    {1, 0, 1, 1, 1},
+                    {1, 1, 1, 1, 1},
+                    {1, 0, 0, 1, 0}
+            };
+            MaximalSquare maximalSquare=new MaximalSquare();
+            System.out.println(maximalSquare.maximalSquare(matrix));
+
+        }
+
     }
 }
