@@ -2,15 +2,12 @@ package pers.cc.demo.leetcode;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.val;
 import org.junit.Assert;
 import org.junit.Test;
+import pers.cc.demo.leetcode.util.TreeNodeUtll;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class LeetCodePart3 {
 

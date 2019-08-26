@@ -1,4 +1,6 @@
-package pers.cc.demo.leetcode;
+package pers.cc.demo.leetcode.util;
+
+import pers.cc.demo.leetcode.TreeNode;
 
 import java.util.*;
 
@@ -16,9 +18,9 @@ public class TreeNodeUtll {
         Map<Integer, TreeNode> map = new HashMap<>(mLen);
         for (int i = 0; i < length; i++) {
             Integer integer = list.get(i);
-            if (Objects.isNull(integer)){
+            if (Objects.isNull(integer)) {
                 map.put(i + 1, null);
-            }else {
+            } else {
                 TreeNode tmp = new TreeNode(integer);
                 map.put(i + 1, tmp);
             }
@@ -55,4 +57,32 @@ public class TreeNodeUtll {
         return map.get(1);
     }
 
+
+    public static TreeNode fillTreeNodeWidth(List<Integer> list) {
+        LinkedList<Integer> linkedList = new LinkedList(list);
+        TreeNode treeNode = null;
+        LinkedList<TreeNode> treeNodeQueue = new LinkedList<>();
+        while (!linkedList.isEmpty()) {
+            Integer val = linkedList.pop();
+            TreeNode node = treeNodeQueue.poll();
+            if (Objects.isNull(treeNode)) {
+                if (Objects.isNull(val)) {
+                    throw new RuntimeException("root node not be null");
+                }
+                treeNode = new TreeNode(val);
+                treeNodeQueue.add(treeNode);
+                continue;
+            }
+            if (Objects.nonNull(val)) {
+                node.left = new TreeNode(val);
+                treeNodeQueue.add(node.left);
+            }
+            val = linkedList.poll();
+            if (Objects.nonNull(val)) {
+                node.right = new TreeNode(val);
+                treeNodeQueue.add(node.right);
+            }
+        }
+        return treeNode;
+    }
 }
