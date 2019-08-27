@@ -22,4 +22,6 @@ public class TreeNode {
             val = x;
         }
 
+        public static TreeNode EMPTY_TREENODE=new TreeNode();
+
 }
