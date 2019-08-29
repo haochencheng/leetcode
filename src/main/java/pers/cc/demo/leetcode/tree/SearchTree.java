@@ -20,7 +20,7 @@ public class SearchTree {
         TreeNode treeNode = buildSearchTree(list);
         System.out.println(exist(treeNode, 67));
         System.out.println(exist(treeNode, 68));
-        TreeNode delete = delete(treeNode, 7);
+        TreeNode delete = delete(treeNode, 6);
         System.out.println(delete);
     }
 
@@ -85,26 +85,49 @@ public class SearchTree {
     }
 
     public static TreeNode delete(TreeNode treeNode, int val) {
+        Objects.requireNonNull(treeNode);
         return delete(treeNode, null, val);
     }
 
-    private static TreeNode delete(TreeNode treeNode, TreeNode parentNode,int val) {
+    private static TreeNode delete(TreeNode treeNode, TreeNode parentNode, int val) {
         if (treeNode.val > val) {
-            return delete(treeNode.left,treeNode, val);
-        } else if (treeNode.val < val){
-            return delete(treeNode.right, treeNode,val);
-        }else {
+            delete(treeNode.left, treeNode, val);
+        } else if (treeNode.val < val) {
+            delete(treeNode.right, treeNode, val);
+        } else {
             if (Objects.isNull(treeNode.left) && Objects.isNull(treeNode.right)) {
-                return null;
-            }
-            if (Objects.isNull(treeNode.left) && Objects.nonNull(treeNode.right)){
-
-            }
-            if (Objects.nonNull(treeNode.left) && Objects.isNull(treeNode.right)){
-
-            }
-            if (Objects.nonNull(treeNode.left) && Objects.nonNull(treeNode.right)){
-                return null;
+                if (Objects.isNull(parentNode)) {
+                    return null;
+                } else {
+                    if (parentNode.left == treeNode) {
+                        parentNode.left = null;
+                    } else {
+                        parentNode.right = null;
+                    }
+                }
+            } else if (Objects.isNull(treeNode.left) && Objects.nonNull(treeNode.right)) {
+                if (Objects.isNull(parentNode)) {
+                    return treeNode.right;
+                } else {
+                    if (parentNode.left == treeNode) {
+                        parentNode.left = treeNode.right;
+                    } else {
+                        parentNode.right = treeNode.right;
+                    }
+                }
+            } else if (Objects.nonNull(treeNode.left) && Objects.isNull(treeNode.right)) {
+                if (Objects.isNull(parentNode)) {
+                    return treeNode.left;
+                } else {
+                    if (parentNode.left == treeNode) {
+                        parentNode.left = treeNode.left;
+                    } else {
+                        parentNode.right = treeNode.left;
+                    }
+                }
+            } else if (Objects.nonNull(treeNode.left) && Objects.nonNull(treeNode.right)) {
+                treeNode.val=treeNode.right.val;
+                delete(treeNode.right,treeNode,treeNode.val);
             }
         }
         return treeNode;
