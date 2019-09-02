@@ -1,4 +1,4 @@
-package pers.cc.demo.leetcode;
+package pers.cc.demo.leetcode.common;
 
 import java.util.List;
 

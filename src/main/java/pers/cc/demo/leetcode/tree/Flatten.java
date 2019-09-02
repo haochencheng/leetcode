@@ -1,7 +1,7 @@
 package pers.cc.demo.leetcode.tree;
 
-import pers.cc.demo.leetcode.TreeNode;
-import pers.cc.demo.leetcode.util.TreeNodeUtll;
+import pers.cc.demo.leetcode.common.TreeNode;
+import pers.cc.demo.leetcode.util.TreeNodeUtil;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -43,7 +43,7 @@ public class Flatten {
 
     public static void main(String[] args) {
         List<Integer> list = Arrays.asList(1, 2, 5, 3,4,null,6);
-        TreeNode treeNode = TreeNodeUtll.fillTreeNodeWidth(list);
+        TreeNode treeNode = TreeNodeUtil.fillTreeNodeWidth(list);
         Flatten flatten = new Flatten();
         flatten.flatten(treeNode);
         System.out.println(treeNode);

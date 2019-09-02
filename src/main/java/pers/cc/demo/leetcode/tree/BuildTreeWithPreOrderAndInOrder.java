@@ -1,6 +1,6 @@
 package pers.cc.demo.leetcode.tree;
 
-import pers.cc.demo.leetcode.TreeNode;
+import pers.cc.demo.leetcode.common.TreeNode;
 
 /**
  * 105. 从前序与中序遍历序列构造二叉树

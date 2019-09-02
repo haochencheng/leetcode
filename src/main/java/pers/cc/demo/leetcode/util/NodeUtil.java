@@ -1,6 +1,7 @@
 package pers.cc.demo.leetcode.util;
 
-import pers.cc.demo.leetcode.TreeNode;
+import pers.cc.demo.leetcode.common.Node;
+import pers.cc.demo.leetcode.common.TreeNode;
 
 import java.util.*;
 
@@ -9,45 +10,45 @@ import java.util.*;
  * @author: haochencheng
  * @create: 2018-12-09 18:37
  **/
-public class TreeNodeUtll {
+public class NodeUtil {
 
 
-    public static TreeNode fillTreeNode(List<Integer> list) {
+    public static Node fillTreeNode(List<Integer> list) {
         final int length = list.size();
         int mLen = Double.valueOf(length * 1.5).intValue();
-        Map<Integer, TreeNode> map = new HashMap<>(mLen);
+        Map<Integer, Node> map = new HashMap<>(mLen);
         for (int i = 0; i < length; i++) {
             Integer integer = list.get(i);
             if (Objects.isNull(integer)) {
                 map.put(i + 1, null);
             } else {
-                TreeNode tmp = new TreeNode(integer);
+                Node tmp = new Node(integer);
                 map.put(i + 1, tmp);
             }
         }
-        final Set<Map.Entry<Integer, TreeNode>> entries = map.entrySet();
-        for (Map.Entry<Integer, TreeNode> entry : entries) {
+        final Set<Map.Entry<Integer, Node>> entries = map.entrySet();
+        for (Map.Entry<Integer, Node> entry : entries) {
             final Integer key = entry.getKey();
-            final TreeNode value = entry.getValue();
-            final TreeNode lNode = map.get(key * 2);
+            final Node value = entry.getValue();
+            final Node lNode = map.get(key * 2);
             if (lNode == null) {
                 continue;
             }
-            value.left = new TreeNode(lNode.val);
+            value.left = new Node(lNode.val);
             if (key % 2 == 0) {
-                final TreeNode treeNode = map.get(key / 2);
+                final Node treeNode = map.get(key / 2);
                 if (treeNode != null) {
                     treeNode.left = value;
                 }
             }
 
-            final TreeNode rNode = map.get(key * 2 + 1);
+            final Node rNode = map.get(key * 2 + 1);
             if (rNode == null) {
                 continue;
             }
-            value.right = new TreeNode(rNode.val);
+            value.right = new Node(rNode.val);
             if (key % 2 != 0) {
-                final TreeNode treeNode1 = map.get((key - 1) / 2);
+                final Node treeNode1 = map.get((key - 1) / 2);
                 if (treeNode1 != null) {
                     treeNode1.right = value;
                 }
@@ -58,31 +59,31 @@ public class TreeNodeUtll {
     }
 
 
-    public static TreeNode fillTreeNodeWidth(List<Integer> list) {
+    public static Node fillNodeWidth(List<Integer> list) {
         LinkedList<Integer> linkedList = new LinkedList(list);
-        TreeNode treeNode = null;
-        LinkedList<TreeNode> treeNodeQueue = new LinkedList<>();
+        Node node = null;
+        LinkedList<Node> treeNodeQueue = new LinkedList<>();
         while (!linkedList.isEmpty()) {
             Integer val = linkedList.pop();
-            TreeNode node = treeNodeQueue.poll();
-            if (Objects.isNull(treeNode)) {
+            Node tmpNode = treeNodeQueue.poll();
+            if (Objects.isNull(node)) {
                 if (Objects.isNull(val)) {
-                    throw new RuntimeException("root node not be null");
+                    throw new RuntimeException("root tmpNode not be null");
                 }
-                treeNode = new TreeNode(val);
-                treeNodeQueue.add(treeNode);
+                node = new Node(val);
+                treeNodeQueue.add(node);
                 continue;
             }
             if (Objects.nonNull(val)) {
-                node.left = new TreeNode(val);
-                treeNodeQueue.add(node.left);
+                tmpNode.left = new Node(val);
+                treeNodeQueue.add(tmpNode.left);
             }
             val = linkedList.poll();
             if (Objects.nonNull(val)) {
-                node.right = new TreeNode(val);
-                treeNodeQueue.add(node.right);
+                tmpNode.right = new Node(val);
+                treeNodeQueue.add(tmpNode.right);
             }
         }
-        return treeNode;
+        return node;
     }
 }

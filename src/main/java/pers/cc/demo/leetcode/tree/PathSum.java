@@ -1,7 +1,7 @@
 package pers.cc.demo.leetcode.tree;
 
-import pers.cc.demo.leetcode.TreeNode;
-import pers.cc.demo.leetcode.util.TreeNodeUtll;
+import pers.cc.demo.leetcode.common.TreeNode;
+import pers.cc.demo.leetcode.util.TreeNodeUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,7 +44,7 @@ public class PathSum {
 
     public static void main(String[] args) {
         List<Integer> list = Arrays.asList(5, 4, 8, 11, null, 13, 4, 7, 2, null, null, 5, 1);
-        TreeNode treeNode = TreeNodeUtll.fillTreeNodeWidth(list);
+        TreeNode treeNode = TreeNodeUtil.fillTreeNodeWidth(list);
         PathSum pathSum = new PathSum();
         List<List<Integer>> lists = pathSum.pathSum(treeNode, 22);
         System.out.println(Arrays.toString(lists.toArray()));

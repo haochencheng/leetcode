@@ -4,7 +4,10 @@ import lombok.Builder;
 import lombok.Data;
 import org.junit.Assert;
 import org.junit.Test;
-import pers.cc.demo.leetcode.util.TreeNodeUtll;
+import pers.cc.demo.leetcode.common.ListNode;
+import pers.cc.demo.leetcode.common.Pair;
+import pers.cc.demo.leetcode.common.TreeNode;
+import pers.cc.demo.leetcode.util.TreeNodeUtil;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -442,8 +445,8 @@ public class LeetCodePart3 {
 
     @Test
     public void isSubtree() {
-        TreeNode t1 = TreeNodeUtll.fillTreeNode(Arrays.asList(3, 4, 5, 1, 2, null, null, 0));
-        TreeNode t2 = TreeNodeUtll.fillTreeNode(Arrays.asList(4, 1, 2));
+        TreeNode t1 = TreeNodeUtil.fillTreeNode(Arrays.asList(3, 4, 5, 1, 2, null, null, 0));
+        TreeNode t2 = TreeNodeUtil.fillTreeNode(Arrays.asList(4, 1, 2));
         System.out.println(isSubtree(t1, t2));
 
     }
@@ -566,7 +569,7 @@ public class LeetCodePart3 {
 
     @Test
     public void zigzagLevelOrder() {
-        TreeNode treeNode = TreeNodeUtll.fillTreeNode(Arrays.asList(3, 9, 20, null, null, 15, 7));
+        TreeNode treeNode = TreeNodeUtil.fillTreeNode(Arrays.asList(3, 9, 20, null, null, 15, 7));
         System.out.println(zigzagLevelOrder(treeNode));
     }
 
@@ -1040,8 +1043,8 @@ public class LeetCodePart3 {
 
     @Test
     public void averageOfLevels() {
-//        TreeNode treeNode = TreeNodeUtll.fillTreeNode(Arrays.asList(3, 9, 20, 15, 7));
-        TreeNode treeNode = TreeNodeUtll.fillTreeNode(Arrays.asList(3, 1, 5, 0, 2, 4, 6));
+//        TreeNode treeNode = TreeNodeUtil.fillTreeNode(Arrays.asList(3, 9, 20, 15, 7));
+        TreeNode treeNode = TreeNodeUtil.fillTreeNode(Arrays.asList(3, 1, 5, 0, 2, 4, 6));
         System.out.println(Arrays.deepToString(averageOfLevels(treeNode).toArray()));
     }
 
@@ -1346,7 +1349,7 @@ public class LeetCodePart3 {
 
     @Test
     public void findSecondMinimumValue() {
-        TreeNode treeNode = TreeNodeUtll.fillTreeNode(Arrays.asList(2, 2, 2));
+        TreeNode treeNode = TreeNodeUtil.fillTreeNode(Arrays.asList(2, 2, 2));
         System.out.println(findSecondMinimumValue(treeNode));
     }
 

@@ -1,11 +1,10 @@
 package pers.cc.demo.leetcode.tree;
 
-import pers.cc.demo.leetcode.TreeNode;
-import pers.cc.demo.leetcode.util.TreeNodeUtll;
+import pers.cc.demo.leetcode.common.TreeNode;
+import pers.cc.demo.leetcode.util.TreeNodeUtil;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 129. 求根到叶子节点数字之和
@@ -57,7 +56,7 @@ public class SumNumbers {
 //        List<Integer> list = Arrays.asList(1, 2, 3);
         List<Integer> list = Arrays.asList(1,0);
 //        List<Integer> list = Arrays.asList(3,1,5,0,2,4,6);
-        TreeNode treeNode = TreeNodeUtll.fillTreeNodeWidth(list);
+        TreeNode treeNode = TreeNodeUtil.fillTreeNodeWidth(list);
 //        treeNode = new TreeNode(1);
 //        treeNode.left = new TreeNode(1);
         SumNumbers sumNumbers = new SumNumbers();

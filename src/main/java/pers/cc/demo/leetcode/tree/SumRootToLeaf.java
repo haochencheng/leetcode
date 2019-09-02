@@ -1,7 +1,7 @@
 package pers.cc.demo.leetcode.tree;
 
-import pers.cc.demo.leetcode.TreeNode;
-import pers.cc.demo.leetcode.util.TreeNodeUtll;
+import pers.cc.demo.leetcode.common.TreeNode;
+import pers.cc.demo.leetcode.util.TreeNodeUtil;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -28,7 +28,7 @@ import java.util.Objects;
 public class SumRootToLeaf {
 
     public static void main(String[] args) {
-        TreeNode treeNode = TreeNodeUtll.fillTreeNode(Arrays.asList(1, 0, 1, 0, 0, 1, 0));
+        TreeNode treeNode = TreeNodeUtil.fillTreeNode(Arrays.asList(1, 0, 1, 0, 0, 1, 0));
         sumRootToLeaf(treeNode);
         System.out.println();
     }

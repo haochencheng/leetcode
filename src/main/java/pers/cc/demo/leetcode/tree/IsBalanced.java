@@ -1,12 +1,10 @@
 package pers.cc.demo.leetcode.tree;
 
-import pers.cc.demo.leetcode.TreeNode;
-import pers.cc.demo.leetcode.util.TreeNodeUtll;
+import pers.cc.demo.leetcode.common.TreeNode;
+import pers.cc.demo.leetcode.util.TreeNodeUtil;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * 110. 平衡二叉树
@@ -53,7 +51,7 @@ public class IsBalanced {
     public static void main(String[] args) {
 //        List<Integer> list = Arrays.asList(3,9,20,null,null,15,7);
         List<Integer> list = Arrays.asList(1, null, 2, null, 3);
-        TreeNode treeNode = TreeNodeUtll.fillTreeNodeWidth(list);
+        TreeNode treeNode = TreeNodeUtil.fillTreeNodeWidth(list);
         IsBalanced isBalanced = new IsBalanced();
         System.out.println(isBalanced.isBalanced(treeNode));
     }

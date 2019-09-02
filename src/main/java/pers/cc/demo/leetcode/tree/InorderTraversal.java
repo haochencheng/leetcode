@@ -1,8 +1,8 @@
 package pers.cc.demo.leetcode.tree;
 
 
-import pers.cc.demo.leetcode.TreeNode;
-import pers.cc.demo.leetcode.util.TreeNodeUtll;
+import pers.cc.demo.leetcode.common.TreeNode;
+import pers.cc.demo.leetcode.util.TreeNodeUtil;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -18,7 +18,7 @@ import java.util.Objects;
 public class InorderTraversal {
 
     public static void main(String[] args) {
-        TreeNode treeNode = TreeNodeUtll.fillTreeNodeWidth(Arrays.asList(1, null, 2, 3));
+        TreeNode treeNode = TreeNodeUtil.fillTreeNodeWidth(Arrays.asList(1, null, 2, 3));
         System.out.println(treeNode);
         List<Integer> list = inorderTraversal(treeNode);
         System.out.println(Arrays.toString(list.toArray()));

@@ -1,7 +1,9 @@
 package pers.cc.demo.leetcode;
 
 import org.junit.Test;
-import pers.cc.demo.leetcode.util.TreeNodeUtll;
+import pers.cc.demo.leetcode.common.Pair;
+import pers.cc.demo.leetcode.common.TreeNode;
+import pers.cc.demo.leetcode.util.TreeNodeUtil;
 
 import java.util.*;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -98,7 +100,7 @@ public class LeetCodePart2 {
     @Test
     public void lowestCommonAncestor() {
 //        int[] nums = new int[]{6,2,8,0,4,7,9,0,0,3,5};
-        final TreeNode root = TreeNodeUtll.fillTreeNode(Arrays.asList(6, 2, 8, 0, 4, 7, 9, 0, 0, 3, 5));
+        final TreeNode root = TreeNodeUtil.fillTreeNode(Arrays.asList(6, 2, 8, 0, 4, 7, 9, 0, 0, 3, 5));
         printTreeNode(root);
 //        System.out.println(lowestCommonAncestor(root,new TreeNode(2),new TreeNode(8)).val);
         System.out.println(lowestCommonAncestor(root, new TreeNode(2), new TreeNode(4)).val);
@@ -1111,7 +1113,7 @@ public class LeetCodePart2 {
     @Test
     public void sumOfLeftLeaves() {
         List<Integer> list = Arrays.asList(3, 9, 20, 15, 7);
-        final TreeNode treeNode = TreeNodeUtll.fillTreeNode(list);
+        final TreeNode treeNode = TreeNodeUtil.fillTreeNode(list);
         System.out.println(sumOfLeftLeaves(treeNode));
     }
 
@@ -1178,7 +1180,7 @@ public class LeetCodePart2 {
     @Test
     public void countNodes() {
         List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
-        final TreeNode treeNode = TreeNodeUtll.fillTreeNode(list);
+        final TreeNode treeNode = TreeNodeUtil.fillTreeNode(list);
         System.out.println(countNodes(treeNode));
     }
 
@@ -1590,7 +1592,7 @@ public class LeetCodePart2 {
     @Test
     public void pathSum() {
         List<Integer> list = Arrays.asList(10, 5, -3, 3, 2, 11, 3, -2, 1);
-        final TreeNode treeNode = TreeNodeUtll.fillTreeNode(list);
+        final TreeNode treeNode = TreeNodeUtil.fillTreeNode(list);
         System.out.println(pathSum(treeNode, 8));
     }
 
