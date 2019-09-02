@@ -1,5 +1,7 @@
 package pers.cc.demo.leetcode.tree;
 
+import pers.cc.demo.leetcode.TreeNode;
+
 /**
  * 105. 从前序与中序遍历序列构造二叉树
  *
@@ -27,11 +29,30 @@ package pers.cc.demo.leetcode.tree;
  * @author: haochencheng
  * @create: 2019-09-01 10:27
  **/
-public class BuildTreeWithArray {
+public class BuildTreeWithPreOrderAndInOrder {
 
     public static void main(String[] args) {
+        //前序遍历
+        int[] preorder = new int[]{3,9,20,15,7};
+        //中序遍历
+        int[] inorder = new int[]{9,3,15,20,7};
+
+//                 3
+//                / \
+//               9  20
+//                /  \
+//               15   7
 
     }
 
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
 
+        return null;
+    }
+
+
+    public TreeNode buildTree(int left, int right) {
+
+        return null;
+    }
 }

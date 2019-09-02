@@ -3,9 +3,7 @@ package pers.cc.demo.leetcode.tree;
 import pers.cc.demo.leetcode.TreeNode;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 98. 验证二叉搜索树
@@ -59,10 +57,10 @@ public class IsValidBST {
     Integer last=Integer.MIN_VALUE;
 
     public boolean isValidBST(TreeNode root) {
-        return dp(root,null,null);
+        return dfs(root,null,null);
     }
 
-    private boolean dp(TreeNode node, Integer lower, Integer upper) {
+    private boolean dfs(TreeNode node, Integer lower, Integer upper) {
         if (node==null){
             return true;
         }
@@ -73,10 +71,10 @@ public class IsValidBST {
         if (upper!=null && val >= upper){
             return false;
         }
-        if (!dp(node.left,lower,val)){
+        if (!dfs(node.left,lower,val)){
             return false;
         }
-        if (!dp(node.right,lower,upper)){
+        if (!dfs(node.right,lower,upper)){
             return false;
         }
         return true;
