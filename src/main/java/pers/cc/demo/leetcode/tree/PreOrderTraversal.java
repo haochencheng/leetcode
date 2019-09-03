@@ -33,8 +33,8 @@ public class PreOrderTraversal {
         List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7);
         TreeNode node = TreeNodeUtil.fillTreeNodeWidth(list);
         PreOrderTraversal preOrderTraversal = new PreOrderTraversal();
-//        System.out.println(Arrays.toString(preOrderTraversal.preorderTraversal(node).toArray()));
-        System.out.println(Arrays.toString(preOrderTraversal.preorderTraversalQueue(node).toArray()));
+        System.out.println(Arrays.toString(preOrderTraversal.preorderTraversal(node).toArray()));
+//        System.out.println(Arrays.toString(preOrderTraversal.preorderTraversalQueue(node).toArray()));
     }
 
     List<Integer> list = new ArrayList<>();
@@ -55,7 +55,7 @@ public class PreOrderTraversal {
         return list;
     }
 
-    private Queue<TreeNode> queue = new LinkedList();
+    private LinkedList<TreeNode> queue = new LinkedList();
 
     /**
      * 队列
@@ -69,14 +69,15 @@ public class PreOrderTraversal {
         }
         queue.add(root);
         while (!queue.isEmpty()) {
-            TreeNode node = queue.poll();
+            TreeNode node = queue.pop();
             list.add(node.val);
-            if (node.left != null) {
-                queue.add(node.left);
-            }
             if (node.right != null) {
-                queue.add(node.right);
+                queue.push(node.right);
             }
+            if (node.left != null) {
+                queue.push(node.left);
+            }
+
         }
         return list;
     }
