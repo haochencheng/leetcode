@@ -1,13 +1,14 @@
 package pers.cc.demo.leetcode.common;
 
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * @description:
  * @author: haochencheng
  * @create: 2018-12-09 18:38
  **/
-@Data
+@ToString
 public class TreeNode {
 
         public int val;

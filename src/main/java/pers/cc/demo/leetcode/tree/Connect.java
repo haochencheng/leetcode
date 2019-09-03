@@ -2,8 +2,13 @@ package pers.cc.demo.leetcode.tree;
 
 
 import pers.cc.demo.leetcode.common.Node;
+import pers.cc.demo.leetcode.common.TreeNode;
+import pers.cc.demo.leetcode.util.NodeUtil;
+import pers.cc.demo.leetcode.util.TreeNodeUtil;
 
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -43,7 +48,11 @@ import java.util.Queue;
 public class Connect {
 
     public static void main(String[] args) {
-
+        List<Integer> list = Arrays.asList(1, 2, 3,4,5,6,7);
+        Node node = NodeUtil.fillNodeWidth(list);
+        Connect connect = new Connect();
+        connect.connect(node);
+        System.out.println(node);
     }
 
     public Queue<Node> queue = new LinkedList();
@@ -52,22 +61,30 @@ public class Connect {
         if (root == null) {
             return root;
         }
-        queue.add(root);
-        bfs();
+        bfs(root);
         return root;
     }
 
-    public void bfs() {
+    public void bfs(Node root) {
+        queue.add(root);
+        //标记队尾
+        queue.add(null);
         while (!queue.isEmpty()) {
             Node node = queue.poll();
-            node.next = queue.peek();
-            if (node.left!=null){
-                queue.add(node.left);
+            Node peek = queue.peek();
+            if (node==null){
+                if (queue.size()>0){
+                    queue.add(null);
+                }
+            }else {
+                node.next = peek;
+                if (node.left!=null){
+                    queue.add(node.left);
+                }
+                if (node.right!=null){
+                    queue.add(node.right);
+                }
             }
-            if (node.right!=null){
-                queue.add(node.right);
-            }
-
         }
     }
 

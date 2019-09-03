@@ -1,10 +1,13 @@
 package pers.cc.demo.leetcode.common;
 
+import lombok.ToString;
+
 /**
  * @description:
  * @author: haochencheng
  * @create: 2019-09-02 08:57
  **/
+@ToString
 public class Node {
     public int val;
     public Node left;

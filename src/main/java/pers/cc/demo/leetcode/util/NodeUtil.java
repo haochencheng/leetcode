@@ -13,7 +13,7 @@ import java.util.*;
 public class NodeUtil {
 
 
-    public static Node fillTreeNode(List<Integer> list) {
+    public static Node fillNode(List<Integer> list) {
         final int length = list.size();
         int mLen = Double.valueOf(length * 1.5).intValue();
         Map<Integer, Node> map = new HashMap<>(mLen);
