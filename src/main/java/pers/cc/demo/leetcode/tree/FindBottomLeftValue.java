@@ -50,12 +50,12 @@ import java.util.List;
  * @author: haochencheng
  * @create: 2019-09-07 01:17
  **/
-public class findBottomLeftValue {
+public class FindBottomLeftValue {
 
     public static void main(String[] args) {
         List<Integer> list = Arrays.asList(2, 1, 3);
         TreeNode treeNode = TreeNodeUtil.fillTreeNodeWidth(list);
-        findBottomLeftValue findBottomLeftValue = new findBottomLeftValue();
+        FindBottomLeftValue findBottomLeftValue = new FindBottomLeftValue();
         int bottomLeftValue = findBottomLeftValue.findBottomLeftValue(treeNode);
         System.out.println(bottomLeftValue);
     }
