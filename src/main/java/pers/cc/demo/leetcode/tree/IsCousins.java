@@ -58,8 +58,6 @@ public class IsCousins {
         System.out.println(isCousins.isCousins(treeNode, 2, 3));
     }
 
-
-
     public boolean isCousins(TreeNode root, int x, int y) {
         if (root == null) {
             return false;
