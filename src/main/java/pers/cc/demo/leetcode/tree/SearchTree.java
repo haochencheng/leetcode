@@ -126,8 +126,8 @@ public class SearchTree {
                     }
                 }
             } else if (Objects.nonNull(treeNode.left) && Objects.nonNull(treeNode.right)) {
-                treeNode.val=treeNode.right.val;
-                delete(treeNode.right,treeNode,treeNode.val);
+                treeNode.val = treeNode.right.val;
+                delete(treeNode.right, treeNode, treeNode.val);
             }
         }
         return treeNode;
