@@ -2,9 +2,6 @@ package pers.cc.demo.leetcode.tree;
 
 import pers.cc.demo.leetcode.common.TreeNode;
 
-import java.util.LinkedList;
-
-
 /**
  * 1008. 先序遍历构造二叉树
  * <p>
