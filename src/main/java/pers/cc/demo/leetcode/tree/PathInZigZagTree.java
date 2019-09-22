@@ -1,9 +1,6 @@
 package pers.cc.demo.leetcode.tree;
 
-import pers.cc.demo.leetcode.common.TreeNode;
-import pers.cc.demo.leetcode.util.TreeNodeUtil;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
