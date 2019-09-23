@@ -3,6 +3,7 @@ package pers.cc.demo.leetcode.tree;
 import pers.cc.demo.leetcode.common.TreeNode;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -46,18 +47,28 @@ public class AllPossibleFBT {
             return new ArrayList<>(1);
         }
         if (N==1){
-            return new ArrayList<>(1);
+            TreeNode root=new TreeNode(0);
+            ArrayList<TreeNode> res = new ArrayList<>(1);
+            res.add(root);
+            return res;
         }
-        TreeNode root=new TreeNode(0);
-        N=N-1;
-        allPossibleFBT(root,N);
-        return null;
+        LinkedList res=new LinkedList();
+        for (int i = 1; i < N; i += 2) {
+            List<TreeNode> left = allPossibleFBT(i);
+            List<TreeNode> right = allPossibleFBT(N - 1 - i);
+            for (TreeNode l : left) {
+                for (TreeNode r : right) {
+                    TreeNode head = new TreeNode(0);
+                    head.left = l;
+                    head.right = r;
+                    res.add(head);
+                }
+            }
+        }
+        return res;
     }
 
-    public TreeNode allPossibleFBT(TreeNode root,int N) {
 
-        return null;
-    }
 
 
 }
