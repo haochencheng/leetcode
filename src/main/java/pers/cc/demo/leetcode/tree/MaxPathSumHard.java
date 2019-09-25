@@ -43,8 +43,8 @@ import java.util.List;
 public class MaxPathSumHard {
 
     public static void main(String[] args) {
-//        List<Integer> list = Arrays.asList(1,2,3);
-        List<Integer> list = Arrays.asList(0);
+        List<Integer> list = Arrays.asList(1,2,3);
+//        List<Integer> list = Arrays.asList(0);
 //        List<Integer> list = Arrays.asList(-10,9,20,null,null,15,7);
         TreeNode treeNode = TreeNodeUtil.fillTreeNodeWidth(list);
         MaxPathSumHard maxPathSumHard = new MaxPathSumHard();
