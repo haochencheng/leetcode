@@ -1,5 +1,7 @@
 package pers.cc.demo.leetcode.tree;
 
+import java.util.HashMap;
+
 /**
  * 684. 冗余连接
  * 在本问题中, 树指的是一个连通且无环的无向图。
@@ -49,6 +51,12 @@ public class FindRedundantConnection {
     }
 
     public int[] findRedundantConnection(int[][] edges) {
+        HashMap<Integer,Integer> hashMap=new HashMap<>();
+        for (int[] edge : edges) {
+            for (int i : edge) {
+
+            }
+        }
         return null;
     }
 
