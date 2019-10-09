@@ -52,57 +52,69 @@ public class DistanceK {
 //        TreeNode node = new TreeNode(5);
 //        2   #21
 //        List<Integer> list = Arrays.asList(0, 1, null, 3, 2);
-//        TreeNode node = new TreeNode(2);
+//        List<Integer> list = Arrays.asList(0,1,2,null,null,null,3);
+//        TreeNode node = new TreeNode(1);
         //# 3
-        List<Integer> list = Arrays.asList(0, null, 1, 2, 5, null, 3, null, null, null, 4);
-        TreeNode node = new TreeNode(2);
+//        List<Integer> list = Arrays.asList(0, null, 1, 2, 5, null, 3, null, null, null, 4);
+//        TreeNode node = new TreeNode(2);
+//
+        List<Integer> list = Arrays.asList(0, 2, 1, null, null, 3);
+        TreeNode node = new TreeNode(3);
+
+
         TreeNode treeNode = TreeNodeUtil.fillTreeNodeWidth(list);
         DistanceK distanceK = new DistanceK();
-        List<Integer> result = distanceK.distanceK(treeNode, node, 2);
+        List<Integer> result = distanceK.distanceK(treeNode, node, 3);
         System.out.println(Arrays.toString(result.toArray()));
     }
 
-    private int[] location=new int[2];
-    private int targetVal;
+    private HashMap<Integer, Integer> hashMap = new HashMap<>();
+    private int rootDeep=0;
 
     public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
-
         if (root == null) {
             return new ArrayList<>(1);
         }
-        List<Integer> result = new LinkedList<>();
-        targetVal=target.val;
-        int deep = deep(root);
-        int pow = (int) Math.pow(2, deep - 1);
-        Integer[][] ints = new Integer[deep][pow];
-        dfs(root, 0, 0, ints);
-        System.out.println(Arrays.deepToString(ints));
-        int y = location[0];
-        int x = location[1];
-
-        return result;
-    }
-
-    public int deep(TreeNode root) {
-        if (root == null) {
-            return 0;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        List<Integer> result=new LinkedList<>();
+        int deep=0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                if (node.val == target.val) {
+                    continue;
+                }
+                Integer parentVal = null;
+                int d=0;
+                do {
+                    d++;
+                    if (parentVal==target.val){
+                        if (d==K){
+                            result.add(node.val);
+                        }
+                    }
+                } while (parentVal != null);
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+            deep++;
         }
-
-        return Math.max(deep(root.left) + 1, deep(root.right) + 1);
+        return null;
     }
 
-    public void dfs(TreeNode root, int x, int y, Integer[][] ints) {
+    public void dfs(TreeNode parent, TreeNode root) {
         if (root == null) {
             return;
         }
-        if (root.val==targetVal){
-            location[0]=y;
-            location[1]=x;
-        }
-        ints[y][x] = root.val;
-        dfs(root.left, x - 1, y + 1, ints);
-        dfs(root.right, x + 1, y + 1, ints);
-
+        hashMap.put(root.val, parent == null ? null : parent.val);
+        dfs(root, root.left);
+        dfs(root, root.right);
     }
 
 

@@ -1,6 +1,7 @@
 package pers.cc.demo.leetcode;
 
 import org.junit.Test;
+import pers.cc.demo.leetcode.common.ListNode;
 import pers.cc.demo.leetcode.common.Pair;
 import pers.cc.demo.leetcode.common.TreeNode;
 import pers.cc.demo.leetcode.util.TreeNodeUtil;
@@ -10,21 +11,6 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 public class LeetCodePart2 {
 
-    static class ListNode {
-
-        public int val;
-        public ListNode next;
-
-        public ListNode(int x) {
-            val = x;
-        }
-
-        @Override
-        public String toString() {
-            return "ListNode [val=" + val + ", next=" + next + "]";
-        }
-
-    }
 
     public boolean isPalindrome(ListNode head) {
         Deque<Integer> deque = new LinkedBlockingDeque<>();

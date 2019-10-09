@@ -1,6 +1,7 @@
 package pers.cc.demo.leetcode.common;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @description:
@@ -25,7 +26,7 @@ public class ListNode {
         ListNode head=null;
         ListNode tmp=null;
         for (int i = 0; i <list.size(); i++) {
-            if (tmp==null){
+            if (Objects.isNull(tmp)){
                 tmp=new ListNode(list.get(i));
                 head = tmp;
             }else {
