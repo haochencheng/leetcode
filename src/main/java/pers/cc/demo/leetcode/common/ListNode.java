@@ -19,7 +19,7 @@ public class ListNode {
 
     @Override
     public String toString() {
-        return "ListNode [val=" + val + ", next=" + next + "]";
+        return "ListNode [val=" + val + ", next=" + next.val + "]";
     }
 
     public static ListNode fillNode(List<Integer> list) {
@@ -35,6 +35,10 @@ public class ListNode {
             }
         }
         return head;
+    }
+
+    public static ListNode createNode(int val){
+        return new ListNode(val);
     }
 
 }
