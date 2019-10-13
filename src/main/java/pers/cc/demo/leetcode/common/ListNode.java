@@ -19,25 +19,28 @@ public class ListNode {
 
     @Override
     public String toString() {
-        return "ListNode [val=" + val + ", next=" + next.val + "]";
+        if (next == null ) {
+            return "ListNode [val=" + val + ", next=" + next + "]";
+        }
+        return "ListNode [val=" + val + ", next=" + next + "]";
     }
 
     public static ListNode fillNode(List<Integer> list) {
-        ListNode head=null;
-        ListNode tmp=null;
-        for (int i = 0; i <list.size(); i++) {
-            if (Objects.isNull(tmp)){
-                tmp=new ListNode(list.get(i));
+        ListNode head = null;
+        ListNode tmp = null;
+        for (int i = 0; i < list.size(); i++) {
+            if (Objects.isNull(tmp)) {
+                tmp = new ListNode(list.get(i));
                 head = tmp;
-            }else {
-                tmp.next=new ListNode(list.get(i));
-                tmp=tmp.next;
+            } else {
+                tmp.next = new ListNode(list.get(i));
+                tmp = tmp.next;
             }
         }
         return head;
     }
 
-    public static ListNode createNode(int val){
+    public static ListNode createNode(int val) {
         return new ListNode(val);
     }
 
