@@ -3,7 +3,6 @@ package pers.cc.demo.leetcode.linkedlist;
 import pers.cc.demo.leetcode.common.ListNode;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * 328. 奇偶链表
