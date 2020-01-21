@@ -58,7 +58,7 @@ public class SortColors {
         int curr=0;
         while (curr<=r){
             if (nums[curr]==0){
-                swap(curr, l++, nums);
+                swap(curr++, l++, nums);
             }else  if (nums[curr]==2){
                 swap(curr, r--, nums);
             }else {
