@@ -2,6 +2,7 @@ package pers.cc.demo.leetcode.array;
 
 /**
  *
+ * 62. 不同路径
  * 一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。
  *
  * 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。
@@ -38,17 +39,26 @@ public class UniquePaths {
 
     public static void main(String[] args) {
         UniquePaths uniquePaths=new UniquePaths();
-        int m=0;int n=0;
-        int i = uniquePaths.uniquePaths(m, n);
-
+        int m=3;int n=2;
+        int steps = uniquePaths.uniquePaths(m, n);
+        System.out.println(steps);
     }
 
     public int uniquePaths(int m, int n) {
         if (m==1|| n ==1){
             return 1;
         }
-
-        return 0;
+        int[][] fn=new int[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i==0||j==0){
+                    fn[i][j]=1;
+                }else {
+                    fn[i][j]=fn[i-1][j]+fn[i][j-1];
+                }
+            }
+        }
+        return fn[m-1][n-1];
     }
 
 }
