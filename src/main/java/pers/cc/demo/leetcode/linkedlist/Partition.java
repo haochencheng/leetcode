@@ -33,25 +33,23 @@ public class Partition {
     }
 
     public ListNode partition(ListNode head, int x) {
-        ListNode pre = new ListNode(0);
-        ListNode next = new ListNode(0);
-        ListNode pre1 = pre;
-        ListNode next1 = next;
+        ListNode small = new ListNode(0);
+        ListNode smallHead = small;
+        ListNode large = new ListNode(0);
+        ListNode largeHead = large;
         while (head != null) {
             if (head.val < x) {
-                pre1.next = head;
-                head = head.next;
-                pre1 = pre1.next;
-                pre1.next = null;
+                small.next = head;
+                small = small.next;
             } else {
-                next1.next = head;
-                head = head.next;
-                next1 = next1.next;
-                next1.next = null;
+                large.next = head;
+                large = large.next;
             }
+            head = head.next;
         }
-        pre1.next = next.next;
-        return pre.next;
+        large.next = null;
+        small.next = largeHead.next;
+        return smallHead.next;
     }
 
 }

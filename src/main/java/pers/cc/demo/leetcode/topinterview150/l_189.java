@@ -3,12 +3,13 @@ package pers.cc.demo.leetcode.topinterview150;
 import javax.swing.*;
 import java.util.Arrays;
 
+// 数组向右移动N位
+
 public class l_189 {
 
     public static void rotate(int[] nums, int k) {
         int length = nums.length;
         int[] result = new int[length];
-        int cur=0;
         for(int i = 0; i< length; i++){
             result[(i+k)%length]=nums[i];
         }

@@ -3,6 +3,7 @@ package pers.cc.demo.leetcode.linkedlist;
 import pers.cc.demo.leetcode.common.ListNode;
 
 import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -48,42 +49,20 @@ public class CopyRandomList {
         System.out.println(result);
     }
 
-    private HashMap<Integer, Node> hashMap = new HashMap<>();
+    Map<Node, Node> cachedNode = new HashMap<Node, Node>();
 
     public Node copyRandomList(Node head) {
         if (head == null) {
             return null;
         }
-        Node origin = head;
-        while (head != null) {
-            createNode(head.val);
-            head = head.next;
+        if (!cachedNode.containsKey(head)) {
+            Node headNew = new Node(head.val);
+            cachedNode.put(head, headNew);
+            headNew.next = copyRandomList(head.next);
+            headNew.random = copyRandomList(head.random);
         }
-        Node result = null;
-        Node cur;
-        while (origin != null) {
-            cur=hashMap.get(origin.val);
-            Node next = origin.next;
-            if (next != null) {
-                cur.next = hashMap.get(next.val);
-            }
-            Node random = origin.random;
-            if (random != null) {
-                cur.random = hashMap.get(random.val);
-            }
-            if (result == null) {
-                result = cur;
-            }
-            origin = origin.next;
-        }
-        return result;
-    }
+        return cachedNode.get(head);
 
-    private Node createNode(int val) {
-        Node node = new Node();
-        node.val = val;
-        hashMap.put(val, node);
-        return node;
     }
 
     static class Node {
@@ -100,13 +79,9 @@ public class CopyRandomList {
             random = _random;
         }
 
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "val=" + val +
-                    ", next=" + next.val +
-                    ", random=" + random.val +
-                    '}';
+
+        public Node(int val) {
+            this.val = val;
         }
     }
 
