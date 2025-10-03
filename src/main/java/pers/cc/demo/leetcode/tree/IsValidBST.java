@@ -1,5 +1,7 @@
 package pers.cc.demo.leetcode.tree;
 
+import org.junit.Assert;
+import pers.cc.demo.leetcode.common.Node;
 import pers.cc.demo.leetcode.common.TreeNode;
 
 import java.util.Arrays;
@@ -42,43 +44,37 @@ import java.util.List;
  **/
 public class IsValidBST {
 
+
+    public boolean helper(TreeNode node, Integer lower, Integer upper) {
+        if (node == null) return true;
+
+        int val = node.val;
+        if (lower != null && val <= lower) return false;
+        if (upper != null && val >= upper) return false;
+
+        if (! helper(node.right, val, upper)) return false;
+        if (! helper(node.left, lower, val)) return false;
+        return true;
+    }
+
+    public boolean isValidBST(TreeNode root) {
+        return helper(root, null, null);
+    }
+
     public static void main(String[] args) {
 //        List<Integer> list = Arrays.asList(7, 5, 23, 87, 56, 93, 25, 1);
 //        List<Integer> list = Arrays.asList(2, 1, 3);
 //        List<Integer> list = Arrays.asList(0,-1);
-        List<Integer> list = Arrays.asList(3,1,5,0,2,4,6);
-        TreeNode treeNode = SearchTree.buildSearchTree(list);
-//        treeNode = new TreeNode(1);
-//        treeNode.left = new TreeNode(1);
+        List<Integer> list = Arrays.asList(2,1,3);
+        TreeNode treeNode = TreeNode.fillTreeNode(list);
         IsValidBST isValidBST = new IsValidBST();
-        System.out.println(isValidBST.isValidBST(treeNode));
+        Assert.assertTrue(isValidBST.isValidBST(treeNode));
+
+        list = Arrays.asList(5,1,4,null,null,3,6);
+         treeNode = TreeNode.fillTreeNode(list);
+        Assert.assertFalse(isValidBST.isValidBST(treeNode));
     }
 
-    Integer last=Integer.MIN_VALUE;
-
-    public boolean isValidBST(TreeNode root) {
-        return dfs(root,null,null);
-    }
-
-    private boolean dfs(TreeNode node, Integer lower, Integer upper) {
-        if (node==null){
-            return true;
-        }
-        int val=node.val;
-        if (lower!=null && val <= lower){
-            return false;
-        }
-        if (upper!=null && val >= upper){
-            return false;
-        }
-        if (!dfs(node.left,lower,val)){
-            return false;
-        }
-        if (!dfs(node.right,lower,upper)){
-            return false;
-        }
-        return true;
-    }
 
 
 }

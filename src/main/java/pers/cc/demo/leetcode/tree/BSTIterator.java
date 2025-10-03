@@ -1,7 +1,5 @@
 package pers.cc.demo.leetcode.tree;
 
-import lombok.Data;
-import lombok.ToString;
 import pers.cc.demo.leetcode.common.Node;
 import pers.cc.demo.leetcode.common.TreeNode;
 import pers.cc.demo.leetcode.util.NodeUtil;
@@ -94,7 +92,7 @@ public class BSTIterator {
         return node!=null;
     }
 
-    @ToString
+
     static class Node {
         int val;
         Node next;

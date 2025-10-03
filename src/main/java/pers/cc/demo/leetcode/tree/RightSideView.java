@@ -1,12 +1,11 @@
 package pers.cc.demo.leetcode.tree;
 
 import pers.cc.demo.leetcode.common.TreeNode;
+import pers.cc.demo.leetcode.util.FileUtil;
 import pers.cc.demo.leetcode.util.TreeNodeUtil;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * 199. 二叉树的右视图
@@ -35,7 +34,7 @@ import java.util.Queue;
  **/
 public class RightSideView {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // 134
 //        List<Integer> list = Arrays.asList(1,2,3,null,5,null,4);
         // 12
@@ -46,34 +45,37 @@ public class RightSideView {
         TreeNode node = TreeNodeUtil.fillTreeNodeWidth(list);
         RightSideView rightSideView = new RightSideView();
         System.out.println(Arrays.toString(rightSideView.rightSideView(node).toArray()));
+        FileUtil.countFile();
     }
 
     private List linkedList = new LinkedList();
     private LinkedList<TreeNode> row = new LinkedList();
 
     public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> ans = new LinkedList<>();
         if (root == null) {
-            return linkedList;
+            return ans;
         }
-        row.add(root);
-        while (!row.isEmpty()) {
-            for (int i = row.size(); i > 0; i--) {
-                TreeNode node = row.poll();
-                if (node == null) {
-                    continue;
+        Deque<TreeNode> queue = new ArrayDeque<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            int temp = size;
+            while (size > 0) {
+                TreeNode poll = queue.poll();
+                if (size == temp) {
+                    ans.add(poll.val);
                 }
-                if (i == 1) {
-                    linkedList.add(node.val);
+                if (poll.right != null) {
+                    queue.offer(poll.right);
                 }
-                if (node.left != null) {
-                    row.add(node.left);
+                if (poll.left != null) {
+                    queue.offer(poll.left);
                 }
-                if (node.right != null) {
-                    row.add(node.right);
-                }
+                size--;
             }
         }
-        return linkedList;
+        return ans;
     }
 
 }

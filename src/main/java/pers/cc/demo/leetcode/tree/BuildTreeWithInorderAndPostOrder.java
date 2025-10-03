@@ -56,8 +56,8 @@ public class BuildTreeWithInorderAndPostOrder {
 
     public TreeNode buildTree(int[] inorder, int[] postorder) {
         this.postorder = postorder;
-        postIndex = postorder.length - 1;
-        for (int i = 0; i < postorder.length; i++) {
+        postIndex = inorder.length - 1;
+        for (int i = 0; i < inorder.length; i++) {
             inorderHashMap.put(inorder[i], i);
         }
         TreeNode dfs = dfs(0, postorder.length - 1);
