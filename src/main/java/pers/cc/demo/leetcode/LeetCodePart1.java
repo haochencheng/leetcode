@@ -3,6 +3,7 @@ package pers.cc.demo.leetcode;
 import org.junit.Test;
 import pers.cc.demo.leetcode.common.ListNode;
 import pers.cc.demo.leetcode.common.Pair;
+import pers.cc.demo.leetcode.common.TreeNode;
 
 import java.math.BigInteger;
 import java.util.*;
@@ -1436,15 +1437,6 @@ public class LeetCodePart1 {
         System.out.println(Arrays.toString(nums1));
     }
 
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(int x) {
-            val = x;
-        }
-    }
 
     /**
      * -----------------100. 相同的树--------------------
