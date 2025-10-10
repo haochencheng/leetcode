@@ -2115,6 +2115,7 @@ public class LeetCodePart3 {
                 return o1[0] - o2[0];
             } else {
                 return o2[1] - o1[1];
+
             }
         };
 
