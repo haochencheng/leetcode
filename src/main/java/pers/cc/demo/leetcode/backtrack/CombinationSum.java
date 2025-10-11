@@ -1,7 +1,6 @@
-package backtrack;
+package pers.cc.demo.leetcode.backtrack;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CombinationSum {

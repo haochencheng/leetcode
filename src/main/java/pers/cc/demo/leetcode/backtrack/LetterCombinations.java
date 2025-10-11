@@ -1,4 +1,4 @@
-package backtrack;
+package pers.cc.demo.leetcode.backtrack;
 
 import java.util.*;
 
