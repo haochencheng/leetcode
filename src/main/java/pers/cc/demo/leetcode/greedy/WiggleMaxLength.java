@@ -59,6 +59,7 @@ public class WiggleMaxLength {
         return res + 1;
     }
 
+
     public static void main(String[] args) {
         int[] nums;
         int i;
